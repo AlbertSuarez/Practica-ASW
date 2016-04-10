@@ -3,7 +3,7 @@
 Integrants de l'equip:
 
 * [Oriol Muñoz](https://github.com/Hanekoma)
-* [Aleix Pellisa]()
+* [Aleix Pellisa](https://github.com/aleixpellisa)
 * [Víctor Pérez](https://github.com/victorpm5)
 * [Albert Suàrez](https://github.com/AlbertSuarez)
 
