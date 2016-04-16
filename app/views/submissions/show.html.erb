@@ -6,18 +6,13 @@
 </p>
 
 <p>
-  <strong>Isurl:</strong>
-  <%= @submission.isUrl %>
-</p>
-
-<p>
   <strong>Url:</strong>
   <%= @submission.url %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @submission.user_id %>
+  <%= @submission.user %>
 </p>
 
 <%= link_to 'Edit', edit_submission_path(@submission) %> |

@@ -2,11 +2,11 @@ class CreateSubmissions < ActiveRecord::Migration
   def change
     create_table :submissions do |t|
       t.string :title
-      t.boolean :isUrl
       t.string :url
-      t.integer :user_id
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end
+    add_index :submissions, [:user_id, :created_at]
   end
 end

@@ -1,5 +1,5 @@
 class Submission < ActiveRecord::Base
   belongs_to :user
-  #Maximum defined 200
-  validates :title, length: { maximum: 200 }
+  validates :user_id, presence: true
+  validates :title, presence: true, length: { maximum: 140 }
 end
