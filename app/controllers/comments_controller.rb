@@ -1,5 +1,9 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  
+  def new_reply
+    @comment = Comment.find(params[:id])
+  end
 
   # GET /comments
   # GET /comments.json

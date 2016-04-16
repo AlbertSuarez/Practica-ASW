@@ -26,15 +26,16 @@ class RepliesController < ApplicationController
   def create
     @reply = Reply.new(reply_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @reply.save
-        format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
-        format.json { render :show, status: :created, location: @reply }
+        # format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
+        redirect_to "/submissions/"+@reply.comment_id.to_s
+        # format.json { render :show, status: :created, location: @reply }
       else
         format.html { render :new }
         format.json { render json: @reply.errors, status: :unprocessable_entity }
       end
-    end
+    # end
   end
 
   # PATCH/PUT /replies/1
