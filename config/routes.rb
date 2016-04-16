@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  resources :submissions
-  resources :submissions
-  resources :submissions
-  resources :submissions
+  resources :replies
+  resources :comments
   resources :submissions
   resources :users
   root 'users#index'

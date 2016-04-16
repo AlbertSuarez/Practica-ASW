@@ -3,7 +3,7 @@ class CreateSubmissions < ActiveRecord::Migration
     create_table :submissions do |t|
       t.string :title
       t.string :url
-      t.integer :user_id
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end
