@@ -1,0 +1,30 @@
+<head>
+</head>
+
+<body>
+    <div style="margin-left:100px;margin-right:100px">
+        <div style="background-color:#ff6600"><b><a href="/">[ASW]</a> Add Reply</b></div>
+        <div style="background-color:#f6f6ef;padding-bottom:10px">
+            <div style="color:grey;margin-left:10px">
+                <a href="/users/<%= @comment.user.id %>">
+                    <%= @comment.user.name %>
+                </a>
+                <%=( (Time.now() - @comment.created_at)/3600).round %> hours ago</div>
+
+
+
+            <div style="margin-left:20px">
+                <%= @comment.content %>
+
+                    <form action="/replies" method="POST" id="reply_content_form">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <input type="hidden" name="reply[user_id]" value=<%=@comment.user.id %>>
+                        <input type="hidden" name="reply[comment_id]" value=<%=@comment.id %>>
+                        <textarea name="reply[content]" value="" form="reply_content_form" style="min-width:500px;min-height:100px"></textarea>
+                        <br>
+                        <input type="submit" value="reply">
+                    </form>
+            </div>
+        </div>
+    </div>
+</body>
