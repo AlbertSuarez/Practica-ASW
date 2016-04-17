@@ -1,19 +1,69 @@
-<p id="notice"><%= notice %></p>
+<head>
+ </head>
+ 
+ <body>
+     <div style="margin-left:100px;margin-right:100px">
+         <div style="background-color:#ff6600"><b><a href="/">[ASW]</a> Hackers News</b></div>
+         <div style="background-color:#f6f6ef;padding-bottom:10px">
+             <div style="color:grey;margin-left:10px">
+                 <a href="<%= @submission.url %>">
+                     <%= @submission.title %>
+                 </a>
+                 <br>
+                  submitted by <a href="/user/<%= @submission.user.id %>">
+                     <%= @submission.user.name %>
+                  </a>
+                     <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago</div>
+ 
+             <div style="margin-left:20px">
+                     <form action="/comments" method="POST" id="comment_content_form">
+                         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                         <input type="hidden" name="comment[user_id]" value=<%=@submission.user.id %>> <!--capturar usuari registrat aquí-->
+                         <input type="hidden" name="comment[submission_id]" value=<%=@submission.user.id %>>
+                         <textarea name="comment[content]" value="" form="comment_content_form" style="min-width:500px;min-height:100px"></textarea>
+                         <br>
+                         <input type="submit" value="add comment">
+                     </form>
+             </div>
+             <br>
+             
+             <!--
+             <table>
+               <#% @comment.each do |commentari| %>
+                 <tr>
+                  <td><a href="/user/<#%= comentari.user.id %>"><#%= comentari.user.name %></td>
+                  <td> <#%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</td>
+                </tr>
+                <tr>
+                  <td> <#%= comentari.content %></td>
+                </tr>
+              <#% end %>
+            </table>
+            -->
+         </div>
+     </div>
+ </body> 
+
+
+
+<!--
+<p id="notice"><#%= notice %></p>
 
 <p>
   <strong>Title:</strong>
-  <%= @submission.title %>
+  <#%= @submission.title %>
 </p>
 
 <p>
   <strong>Url:</strong>
-  <%= @submission.url %>
+  <#%= @submission.url %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @submission.user %>
+  <#%= @submission.user %>
 </p>
 
-<%= link_to 'Edit', edit_submission_path(@submission) %> |
-<%= link_to 'Back', submissions_path %>
+<#%= link_to 'Edit', edit_submission_path(@submission) %> |
+<#%= link_to 'Back', submissions_path %>
+-->
