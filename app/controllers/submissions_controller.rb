@@ -10,10 +10,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions/1
   # GET /submissions/1.json
   def show
-    #@comments = Comment.where("submission_id=" + params[:id]).order("created_at DESC");
-    @comments = Comment.all
-    #@comments = Comment.find_by_sql ["SELECT * FROM Comment WHERE submission_id = :submission_id order by created_at DESC", {:submission_id => params[:id] } ]
-
+    @comments = Comment.where("submission_id=" + (params[:id].to_f - 1).to_s).order("created_at DESC")
   end
 
   # GET /submissions/new
