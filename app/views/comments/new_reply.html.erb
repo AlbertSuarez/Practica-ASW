@@ -9,13 +9,11 @@
                 <a href="/users/<%= @comment.user.id %>">
                     <%= @comment.user.name %>
                 </a>
-                <%=( (Time.now() - @comment.created_at)/3600).round %> hours ago</div>
-
-
+            <%=( (Time.now() - @comment.created_at)/3600).round %> hours ago
+            </div>
 
             <div style="margin-left:20px">
                 <%= @comment.content %>
-
                     <form action="/replies" method="POST" id="reply_content_form">
                         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                         <input type="hidden" name="reply[user_id]" value=<%=@comment.user.id %>>
