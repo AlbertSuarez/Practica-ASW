@@ -10,7 +10,7 @@
                      <%= @submission.title %>
                  </a>
                  <br>
-                  submitted by <a href="/user/<%= @submission.user.id %>">
+                  submitted by <a href="/users/<%= @submission.user.id %>">
                      <%= @submission.user.name %>
                   </a>
                   <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
@@ -34,7 +34,7 @@
                <% @comments.each do |comentari| %>
                 <table>
                   <tr>
-                    <td><a href="/user/<%= comentari.user.id %>"><%= comentari.user.name %></a>
+                    <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
                     <a href="/comments/<%= comentari.id %>/new_reply">
                       <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
                   </tr>
