@@ -13,7 +13,10 @@
                   submitted by <a href="/user/<%= @submission.user.id %>">
                      <%= @submission.user.name %>
                   </a>
-                     <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago</div>
+                  <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
+                  <%= @comments.length %> comments
+              </div>
+                  
  
              <div style="margin-left:20px">
                      <form action="/comments" method="POST" id="comment_content_form">
@@ -26,20 +29,23 @@
                      </form>
              </div>
              <br>
-             
-             <!--
-             <table>
-               <#% @comment.each do |commentari| %>
-                 <tr>
-                  <td><a href="/user/<#%= comentari.user.id %>"><#%= comentari.user.name %></td>
-                  <td> <#%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</td>
-                </tr>
-                <tr>
-                  <td> <#%= comentari.content %></td>
-                </tr>
-              <#% end %>
-            </table>
-            -->
+             <br>
+            
+               <% @comments.each do |comentari| %>
+                <table>
+                  <tr>
+                    <td><a href="/user/<%= comentari.user.id %>"><%= comentari.user.name %></a>
+                    <a href="/comments/<%= comentari.id %>/new_reply">
+                      <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
+                  </tr>
+                  <tr>
+                    <td> <%= comentari.content %></td>
+                  </tr>
+                </table>
+                <a href="/comments/<%= comentari.id %>/new_reply">reply</a>
+                <br>
+                <br>
+              <% end %>
          </div>
      </div>
  </body> 
