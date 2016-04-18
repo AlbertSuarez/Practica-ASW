@@ -28,12 +28,12 @@
               <tbody>
                 <% @submissions.each do |submission| %>
                 <tr>
-                  <td><font color="grey"><%= submission.id %>. <font color="black"><a href="<%= submission.url %>"><%= submission.title %></a></font> </font> <font color="grey">(<%= submission.url %>)</font></td>
+                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href="<%= submission.url %>"><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
                 </tr>
                 <tr>
                   <td>
-                    <font color="grey">
-                      0 points by <a href="/users/<%= submission.user_id %>"><%= submission.user_id %></a>
+                    <font color="grey" size="2">
+                      0 points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
                       <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>">0</a> comments
                     </font>
                   </td>
