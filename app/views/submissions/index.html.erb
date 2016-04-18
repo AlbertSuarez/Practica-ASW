@@ -34,7 +34,7 @@
                   <td>
                     <font color="grey" size="2">
                       0 points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
-                      <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>">0</a> comments
+                      <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>"><%= Comment.count('user_id') %></a> comments
                     </font>
                   </td>
                 </tr>
