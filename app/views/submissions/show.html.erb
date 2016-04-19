@@ -11,10 +11,9 @@
                  </a>
                  <br>
                   submitted by <a href="/users/<%= @submission.user.id %>">
-                     <%= @submission.user.name %>
-                  </a>
-                  <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
-                  <%= @comments.length %> comments
+                    <%=@submission.user.name%></a>
+                  <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago 
+                  | <%= @comments.length %> comments
               </div>
                   
  
@@ -43,7 +42,7 @@
                   </tr>
                 </table>
                 <a href="/comments/<%= comentari.id %>/new_reply">reply</a>
-                        <%@replies=Reply.where("comment_id=?",comentari.id)%>
+                        <%@replies=Reply.where("comment_id=?",comentari.id).order("created_at DESC")%>
                             <% @replies.each do |reply| %>
                                 <div style="color:grey;margin-left:20px">
                                     <table>

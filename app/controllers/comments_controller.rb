@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   
   def new_reply
     @comment = Comment.find(params[:id])
+    @replies = Reply.where("comment_id=?",@comment.id).order("created_at DESC")
   end
 
   # GET /comments

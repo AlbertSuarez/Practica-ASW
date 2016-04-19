@@ -23,6 +23,22 @@
                         <input type="submit" value="reply">
                     </form>
             </div>
+            
+            <br>
+            
+            <% @replies.each do |reply| %>
+                <table style="margin-left:10px" >
+                  <tr>
+                    <td><a href="/users/<%= reply.user.id %>"><%= reply.user.name %></a>
+                    <a href="/comments/<%= reply.comment.id %>/new_reply">
+                      <%=( (Time.now() - reply.created_at)/3600).round %> hours ago</a></td>
+                  </tr>
+                  <tr>
+                    <td style="color:grey;"> <%= reply.content %></td>
+                  </tr>
+                </table>
+                <br>
+            <%end%>
         </div>
     </div>
 </body>
