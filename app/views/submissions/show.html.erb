@@ -31,20 +31,23 @@
              <br>
             
                <% @comments.each do |comentari| %>
-                <table>
-                  <tr>
-                    <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
-                    <a href="/comments/<%= comentari.id %>/new_reply">
-                      <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
-                  </tr>
-                  <tr>
-                    <td style="color:grey;"> <%= comentari.content %></td>
-                  </tr>
-                </table>
-                <a href="/comments/<%= comentari.id %>/new_reply">reply</a>
+                   <div style="margin-left:10px">                    
+                    <table>
+                      <tr>
+                        <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
+                        <a href="/comments/<%= comentari.id %>/new_reply">
+                          <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
+                      </tr>
+                      <tr>
+                        <td style="color:grey;"> <%= comentari.content %></td>
+                      </tr>
+                    </table>
+                    <a href="/comments/<%= comentari.id %>/new_reply">reply</a>
+                   </div>
+
                         <%@replies=Reply.where("comment_id=?",comentari.id).order("created_at DESC")%>
                             <% @replies.each do |reply| %>
-                                <div style="color:grey;margin-left:20px">
+                                <div style="color:grey;margin-left:25px">
                                     <table>
                                       <tr>
                                         <td><a href="/users/<%= reply.comment.user.id %>"><%= reply.comment.user.name %></a>
