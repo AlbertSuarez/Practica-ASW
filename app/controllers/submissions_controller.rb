@@ -10,7 +10,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions/1
   # GET /submissions/1.json
   def show
-    @comments = Comment.where("submission_id=" + (params[:id].to_f - 1).to_s).order("created_at DESC")
+    @comments = Comment.where("submission_id=" + (params[:id])).order("created_at DESC")
   end
 
   # GET /submissions/new

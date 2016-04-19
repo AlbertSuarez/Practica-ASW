@@ -29,7 +29,7 @@ class RepliesController < ApplicationController
     # respond_to do |format|
       if @reply.save
         # format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
-        redirect_to "/submissions/"+@reply.comment_id.to_s
+        redirect_to @reply.comment.submission
         # format.json { render :show, status: :created, location: @reply }
       else
         format.html { render :new }

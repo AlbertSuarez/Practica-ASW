@@ -6,7 +6,7 @@
          <div style="background-color:#ff6600"><b><a href="/">[ASW]</a> Hackers News</b></div>
          <div style="background-color:#f6f6ef;padding-bottom:10px">
              <div style="color:grey;margin-left:10px">
-                 <a href="http://<%= @submission.url %>">
+                 <a href=<%= @submission.url %>>
                      <%= @submission.title %>
                  </a>
                  <br>
@@ -22,7 +22,7 @@
                      <form action="/comments" method="POST" id="comment_content_form">
                          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                          <input type="hidden" name="comment[user_id]" value=<%=@submission.user.id %>> <!--capturar usuari registrat aquí-->
-                         <input type="hidden" name="comment[submission_id]" value=<%=@submission.user.id %>>
+                         <input type="hidden" name="comment[submission_id]" value=<%=@submission.id %>>
                          <textarea name="comment[content]" value="" form="comment_content_form" style="min-width:500px;min-height:100px"></textarea>
                          <br>
                          <input type="submit" value="add comment">

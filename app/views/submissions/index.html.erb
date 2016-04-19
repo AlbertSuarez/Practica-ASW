@@ -28,7 +28,7 @@
               <tbody>
                 <% @submissions.each do |submission| %>
                 <tr>
-                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href="http://<%= submission.url %>"><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
+                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
                 </tr>
                 <tr>
                   <td>
