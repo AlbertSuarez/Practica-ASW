@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   get 'comments/:id/new_reply' => 'comments#new_reply'
   
   ##########authentication stuff---> don't touch!###############
+  
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
+  
   ##############################################################
   
   resources :replies
@@ -17,7 +19,9 @@ Rails.application.routes.draw do
   resources :submissions
   resources :users
   resources :sessions, only: [:create, :destroy]
+  
   root 'submissions#index'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
