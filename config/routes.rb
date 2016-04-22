@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   get 'comments/:id/new_reply' => 'comments#new_reply'
+  get 'ask' => 'submissions#ask'
   
   resources :replies
   resources :comments

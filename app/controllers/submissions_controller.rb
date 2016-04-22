@@ -6,6 +6,12 @@ class SubmissionsController < ApplicationController
   def index
     @submissions = Submission.all
   end
+  
+  # GET /submissions/ask
+  # GET /submissions/ask.json
+  def ask
+    @submissions = Submission.all
+  end
 
   # GET /submissions/1
   # GET /submissions/1.json

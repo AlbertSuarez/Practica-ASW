@@ -1,6 +1,6 @@
 <head>
+  <title>Ask | Hackers News</title>
 </head>
-
 <body>
   <center>
     <table bgcolor="#f6f6ef" border="0" cellpadding="0" cellspacing="0" width="85%">
@@ -15,7 +15,7 @@
                   </td>
                   <td class="header">
                     <font size="4"> <b><a href="/">Hacker News</a></b>
-                                    </font><font size="3"> <a href="/"><font color="white">new</font></a> | <a href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
+                                    </font><font size="3"> <a href="/">new</a> | <a href="/ask"><font color="white">ask</font></a> | <a href="/submissions/new">submit</a></font>
                   </td>
                   <td>
                     <div align="right"><font size="4">login</font></div>
@@ -31,9 +31,9 @@
             <table>
               <tbody>
                 <% @submissions.each do |submission| %>
-                <% if submission.url != ""%>
+                <% if submission.url == ""%>
                 <tr>
-                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
+                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font></td>
                 </tr>
                 <tr>
                   <td>
@@ -44,7 +44,7 @@
                   </td>
                 </tr>
                 <tr class="spacer" style="height:5px"></tr>
-                <% end %> 
+                <% end %>
                 <% end %>                
               </tbody>
             </table>
