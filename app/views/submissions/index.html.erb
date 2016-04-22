@@ -18,8 +18,18 @@
                                     </font><font size="3"> <a href="/"><font color="white">new</font></a> | <a href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
                   </td>
                   <td>
-                    <div align="right"><font size="4">login</font></div>
-                  </td
+                    <font size="3">
+                      <div align="right">
+                        <% if current_user %>
+                          Signed in as <strong><%= current_user.name %></strong>!
+                          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                          <% else %>
+                          <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
+                          <% end %>
+                      </div>
+                    </font>
+                  </td>
+                  <td class="spacer" style="width:10px"></td>
                 </tr>
               </tbody>
             </table>
