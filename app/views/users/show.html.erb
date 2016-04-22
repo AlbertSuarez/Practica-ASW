@@ -20,5 +20,20 @@
   <%= @user.password %>
 </p>
 
+<p>
+  <strong>uid:</strong>
+  <%= @user.uid %>
+</p>
+
+<p>
+  <strong>Token:</strong>
+  <%= @user.oauth_token %>
+</p>
+
+<p>
+  <strong>expires At:</strong>
+  <%= @user.oauth_expires_at %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
