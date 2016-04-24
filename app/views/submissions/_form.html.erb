@@ -21,7 +21,7 @@
   </div>
   
   <div class="message">
-    <%= f.label " or" %>
+    <strong><%= f.label " or" %></strong>
   </div>
   <br>
   
@@ -30,7 +30,11 @@
     <%= f.text_area :text %>
   </div>
   
-  <input type="hidden" name="submission[user_id]" value=<%= 1 %>>
+  <% if current_user %>
+  <input type="hidden" name="submission[user_id]" value=<%= current_user.id %>>
+  <% else %>
+  <input type="hidden" name="submission[user_id]" value=<%=  %>>
+  <% end %>
   
   <div class="actions">
     <%= f.submit %>
