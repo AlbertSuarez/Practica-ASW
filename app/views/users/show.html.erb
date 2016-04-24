@@ -1,39 +1,84 @@
-<p id="notice"><%= notice %></p>
+<head>
+</head>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<body>
+  <center>
+    <table bgcolor="#f6f6ef" border="0" cellpadding="0" cellspacing="0" width="85%">
+      <tbody>
+        <tr>
+          <td bgcolor="ff6600">
+            <table style="padding=2px" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <td style="width:18px;padding-right:4px">
+                    <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></img></a>
+                  </td>
+                  <td class="header">
+                    <font size="4"> <b><a href="/">Hacker News</a></b>
+                                    </font><font size="3"> <a href="/">new</a> | <a href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
+                  </td>
+                  <td>
+                    <font size="3">
+                      <div align="right">
+                        <% if current_user %>
+                          Signed in as <strong><font color="white">
+                            <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
+                            </font></strong>
+                          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                          <% else %>
+                          <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
+                          <% end %>
+                      </div>
+                    </font>
+                  </td>
+                  <td class="spacer" style="width:10px"></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height:10px"></tr>
+        <tr>
+          <td>
+            <table>
+              <tbody>
+                <div style="margin-left:20px">
+                  <p>
+                    <strong>Name:</strong>
+                    <%= @user.name %>
+                  </p>
+                  
+                  <p>
+                    <strong>Created at:</strong>
+                    <%= @user.created_at %>
+                  </p>
+                  
+                  <% if current_user && current_user.id == @user.id %>
+                  
+                    <p>
+                      <strong>Email:</strong>
+                      <%= @user.email %>
+                    </p>
+                  
+                  <% end %>
+                  
+                  <p>
+                    <strong>About:</strong>
+                    <%= @user.about %>
+                  </p>
+                  
+                  <% if current_user && current_user.id == @user.id %>
+                    <%= link_to 'Edit', edit_user_path(@user) %>
+                  <% end %>
+                  
+                </div>
+                <tr class="spacer" style="height:20px"></tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
 
-<p>
-  <strong>About:</strong>
-  <%= @user.about %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>uid:</strong>
-  <%= @user.uid %>
-</p>
-
-<p>
-  <strong>Token:</strong>
-  <%= @user.oauth_token %>
-</p>
-
-<p>
-  <strong>expires At:</strong>
-  <%= @user.oauth_expires_at %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+      </tbody>
+    </table>
+  </center>
+</body>

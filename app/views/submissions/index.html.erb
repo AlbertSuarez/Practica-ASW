@@ -21,7 +21,9 @@
                     <font size="3">
                       <div align="right">
                         <% if current_user %>
-                          Signed in as <strong><%= current_user.name %></strong>!
+                          Signed in as <strong>
+                            <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
+                            </strong>
                           <%= link_to "Sign out", signout_path, id: "sign_out" %>
                           <% else %>
                           <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
