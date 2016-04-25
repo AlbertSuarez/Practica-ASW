@@ -16,7 +16,11 @@
                 <%= @comment.content %>
                     <form action="/replies" method="POST" id="reply_content_form">
                         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                        <input type="hidden" name="reply[user_id]" value=<%=@comment.user.id %>>
+                        <% if current_user %>
+                            <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                        <% else %>
+                            <input type="hidden" name="reply[user_id]" value=<%= %>>
+                        <% end %>
                         <input type="hidden" name="reply[comment_id]" value=<%=@comment.id %>>
                         <textarea name="reply[content]" value="" form="reply_content_form" style="min-width:500px;min-height:100px"></textarea>
                         <br>
