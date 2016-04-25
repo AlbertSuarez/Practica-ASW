@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   get 'comments/:id/new_reply' => 'comments#new_reply'
+  post 'submissions/:id/vote' => 'submissions#vote'
   get 'ask' => 'submissions#ask'
   
   ##########authentication stuff---> don't touch!###############

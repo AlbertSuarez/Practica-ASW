@@ -1,5 +1,15 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  
+  def vote
+    @submission = Submission.find(params[:id])
+    begin
+      User.find(params[:reply][:user_id]).vote_for(@submission)
+    rescue Exception
+      # lmao who cares
+    end
+    redirect_to "/"
+  end
 
   # GET /submissions
   # GET /submissions.json

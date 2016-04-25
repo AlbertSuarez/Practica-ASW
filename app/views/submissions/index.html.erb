@@ -50,15 +50,17 @@
                     <font color="grey" size="3"><%= i %>.
                     </td>
                     <td>
-                    <form action="/submissions/<%= submission.id %>/vote" method="POST" id="upvote_submission_form">
-                      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                      <% if current_user %>
-                          <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
-                      <% else %>
-                          <input type="hidden" name="reply[user_id]" value=<%= %>>
+                      <% if !current_user.voted_for?(submission) %>
+                      <form action="/submissions/<%= submission.id %>/vote" method="POST" id="upvote_submission_form">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <% if current_user %>
+                            <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                        <% else %>
+                            <input type="hidden" name="reply[user_id]" value=<%= %>>
+                        <% end %>
+                        <input type="image" name="submit_vote" src="grayarrow.gif">
+                      </form>
                       <% end %>
-                      <input type="image" name="submit_vote" src="grayarrow.gif">
-                    </form>
                     </td>
                     <td>
                     <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font>
@@ -69,7 +71,7 @@
                 <tr>
                   <td>
                     <font color="grey" size="2">
-                      0 points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
+                      <%= submission.votes.size %> points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
                       <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?', submission.id).length %></a> comments
                     </font>
                   </td>
