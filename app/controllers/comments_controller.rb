@@ -15,6 +15,10 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @replies = Reply.where("comment_id=?",@comment.id).order("created_at DESC")
   end
+  
+  def threads
+    @comments = Comment.all.order("created_at DESC")
+  end
 
   # GET /comments
   # GET /comments.json

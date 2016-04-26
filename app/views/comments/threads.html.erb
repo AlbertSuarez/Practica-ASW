@@ -42,7 +42,43 @@
             </td>
         </tr>
         <tr style="height:10px"></tr>
-        
+            <td>
+                <% @comments.each do |comment| %>
+                <% if comment.user_id == current_user.id%>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="spacer" style="width:2px"></td>
+                        <td>
+                            <font color="orange" size="3">*</font>
+                        </td>
+                        <td class="spacer" style="width:5px"></td>
+                        <td>
+                            <font color="grey" size="2">
+                                <%= comment.votes.size %> points by 
+                                <a href="/users/<%= comment.user_id %>"><font color="green"><%= current_user.name%></font></a> 
+                                <%=( (Time.now() - comment.created_at)/3600).round %> hours ago | 
+                                on: <%= comment.submission.title %>
+                            </font>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td class="spacer" style="width:21px"></td>
+                        <td>
+                            <font color="black" size="2">
+                                <%= comment.content%>
+                            </font>
+                        </td>
+                    </tr>
+                    <tr class="spacer" style="height:8px"></tr>
+                    <% end %>
+                    <% end %>
+                    </tbody>
+                </table>
+            </td>
+
         </tbody>
     </table>
 </center>
