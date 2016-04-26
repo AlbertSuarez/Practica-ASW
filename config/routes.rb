@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   get 'comments/:id/new_reply' => 'comments#new_reply'
+  
+  #### votes ####
   post 'submissions/:id/vote' => 'submissions#vote'
+  post 'comments/:id/vote' => 'comments#vote'
+  ###############
+  
   get 'ask' => 'submissions#ask'
   get 'threads' => 'comments#threads'
   

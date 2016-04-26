@@ -90,10 +90,25 @@
                 <div style="margin-left:10px">
                     <table>
                         <tr>
+                            <td>
+                        <form action="/comments/<%= comentari.id %>/vote" method="POST"
+                          id="upvote_submission_form">
+                            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                            <% if current_user && !current_user.voted_for?(comentari) %>
+                            <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                            <input type="image" name="submit_vote" src="/grayarrow.gif">
+                            <% else if !current_user %>
+                            <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                            <% end %>
+                        </form>
+                        <% end %>
+                        </td>
                             <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
                                 <a href="/comments/<%= comentari.id %>/new_reply">
                                     <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
                         </tr>
+                        </table>
+                        <table>
                         <tr>
                             <td style="color:grey;"> <%= comentari.content %></td>
                         </tr>
