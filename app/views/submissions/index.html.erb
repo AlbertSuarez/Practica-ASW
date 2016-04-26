@@ -2,90 +2,97 @@
 </head>
 
 <body>
-  <center>
+<center>
     <table bgcolor="#f6f6ef" border="0" cellpadding="0" cellspacing="0" width="85%">
-      <tbody>
+        <tbody>
         <tr>
-          <td bgcolor="ff6600">
-            <table style="padding=2px" border="0" cellpadding="0" cellspacing="0" width="100%">
-              <tbody>
-                <tr>
-                  <td style="width:18px;padding-right:4px">
-                    <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></img></a>
-                  </td>
-                  <td class="header">
-                    <font size="4"> <b><a href="/">Hacker News</a></b>
-                                    </font><font size="3"> <a href="/"><font color="white">new</font></a> | <a href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
-                  </td>
-                  <td>
-                    <font size="3">
-                      <div align="right">
-                        <% if current_user %>
-                          Signed in as <strong>
-                            <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
-                            </strong> | 
-                          <%= link_to "Sign out", signout_path, id: "sign_out" %>
-                          <% else %>
-                          <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
-                          <% end %>
-                      </div>
-                    </font>
-                  </td>
-                  <td class="spacer" style="width:10px"></td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+            <td bgcolor="ff6600">
+                <table style="padding:2px" border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <td style="width:18px;padding-right:4px">
+                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                        </td>
+                        <td class="header">
+                            <font size="4"> <b><a href="/">Hacker News</a></b>
+                            </font><font size="3"> <a href="/"><font color="white">new</font></a> | <a
+                                href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
+                        </td>
+                        <td>
+                            <font size="3">
+                                <div align="right">
+                                    <% if current_user %>
+                                    Signed in as <strong>
+                                    <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
+                                </strong> |
+                                    <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                                    <% else %>
+                                    <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
+                                    <% end %>
+                                </div>
+                            </font>
+                        </td>
+                        <td class="spacer" style="width:10px"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         <tr style="height:10px"></tr>
         <tr>
-          <td>
-            <table>
-              <tbody>
+            <td>
                 <% i=1 %>
                 <% @submissions.each do |submission| %>
                 <% if submission.url != ""%>
-                <tr>
-                  <td>
-                    <font color="grey" size="3"><%= i %>.
-                    </td>
-                    <td>
-                      <% if !current_user.voted_for?(submission) %>
-                      <form action="/submissions/<%= submission.id %>/vote" method="POST" id="upvote_submission_form">
-                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                        <% if current_user %>
-                            <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
-                        <% else %>
-                            <input type="hidden" name="reply[user_id]" value=<%= %>>
-                        <% end %>
-                        <input type="image" name="submit_vote" src="grayarrow.gif">
-                      </form>
-                      <% end %>
-                    </td>
-                    <td>
-                    <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font>
-                  </td>
-                </tr>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <font color="grey" size="3"><%= i %>.</font>
+                        </td>
+                        <td>
+                            <% if current_user && !current_user.voted_for?(submission) %>
+                            <form action="/submissions/<%= submission.id %>/vote" method="POST"
+                                  id="upvote_submission_form">
+                                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                                <% if current_user %>
+                                <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                                <% else %>
+                                <input type="hidden" name="reply[user_id]" value=<%= %>>
+                                <% end %>
+                                <input type="image" name="submit_vote" src="grayarrow.gif">
+                            </form>
+                            <% end %>
+                        </td>
+                        <td>
+                            <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title
+                                %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font>
+                        </td>
+                    </tr>
                 </table>
                 <table>
-                <tr>
-                  <td>
-                    <font color="grey" size="2">
-                      <%= submission.votes.size %> points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
-                      <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?', submission.id).length %></a> comments
-                    </font>
-                  </td>
-                </tr>
-                <tr class="spacer" style="height:5px"></tr>
-                <% i += 1 %>
-                <% end %> 
-                <% end %>                
-              </tbody>
-            </table>
-          </td>
+                    <tr>
+                        <td>
+                            <font color="grey" size="2">
+                                <%= submission.votes.size %> points by <a href="/users/<%= submission.user_id %>"><%=
+                                submission.user.name %></a>
+                                <a href="/submissions/<%= submission.id %>"><%=( (Time.now() -
+                                    submission.created_at)/3600).round %> hours ago</a> | <a
+                                    href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?',
+                                submission.id).length %></a> comments
+                            </font>
+                        </td>
+                    </tr>
+                    <tr class="spacer" style="height:5px"></tr>
+                    <% i += 1 %>
+                    <% end %>
+                    <% end %>
+                    </tbody>
+                </table>
+            </td>
         </tr>
 
-      </tbody>
+        </tbody>
     </table>
-  </center>
+</center>
 </body>
