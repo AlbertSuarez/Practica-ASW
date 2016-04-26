@@ -7,4 +7,4 @@ Integrants de l'equip:
 * [Víctor Pérez](https://github.com/victorpm5)
 * [Albert Suàrez](https://github.com/AlbertSuarez)
 
-####[Heroku link](http://enigmatic-dusk-22745.herokuapp.com/)
+####[Heroku link](http://hackersnewss.herokuapp.com/)
