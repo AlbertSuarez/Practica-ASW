@@ -2,9 +2,43 @@
 </head>
 
 <body>
-    <div style="margin-left:100px;margin-right:100px">
-        <div style="background-color:#ff6600"><b><a href="/">[ASW]</a> Add Reply</b></div>
-        <div style="background-color:#f6f6ef;padding-bottom:10px">
+<center>
+ <table bgcolor="#f6f6ef" border="0" cellpadding="0" cellspacing="0" width="85%">
+        <tr>
+          <td bgcolor="ff6600">
+            <table style="padding=2px" border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <td style="width:18px;padding-right:4px">
+                    <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></img></a>
+                  </td>
+                  <td class="header">
+                    <font size="4"> <b><a href="/">Hacker News</a></b>
+                                    </font><font size="3"> <a href="/">new</a> | <a href="/ask"><font>ask</font></a> | <a href="/submissions/new">submit</a></font>
+                  </td>
+                  <td>
+                    <font size="3">
+                      <div align="right">
+                        <% if current_user %>
+                          Signed in as <strong>
+                            <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
+                            </strong> | 
+                          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                          <% else %>
+                          <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
+                          <% end %>
+                      </div>
+                    </font>
+                  </td>
+                  <td class="spacer" style="width:10px"></td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height:10px"></tr>
+        <tr>
+          <td>
             <div style="color:grey;margin-left:10px">
                 <a href="/users/<%= @comment.user.id %>">
                     <%= @comment.user.name %>
@@ -43,6 +77,8 @@
                 </table>
                 <br>
             <%end%>
-        </div>
-    </div>
+          </td>
+        </tr>
+    </table>
+  </center>
 </body>
