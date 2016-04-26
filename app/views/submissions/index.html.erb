@@ -51,16 +51,15 @@
                             <font color="grey" size="3"><%= i %>.</font>
                         </td>
                         <td>
-                            <% if current_user && !current_user.voted_for?(submission) %>
                             <form action="/submissions/<%= submission.id %>/vote" method="POST"
                                   id="upvote_submission_form">
                                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                                <% if current_user %>
+                                <% if current_user && !current_user.voted_for?(submission) %>
                                 <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
-                                <% else %>
-                                <input type="hidden" name="reply[user_id]" value=<%= %>>
-                                <% end %>
                                 <input type="image" name="submit_vote" src="grayarrow.gif">
+                                <% else if !current_user %>
+                                <a href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
+                                <% end %>
                             </form>
                             <% end %>
                         </td>
