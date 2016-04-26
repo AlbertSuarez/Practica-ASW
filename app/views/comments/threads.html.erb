@@ -50,14 +50,16 @@
                     <tr>
                         <td class="spacer" style="width:2px"></td>
                         <td>
-                            <font color="orange" size="3">*</font>
+                            <font color="#ff6600" size="3">*</font>
                         </td>
                         <td class="spacer" style="width:5px"></td>
                         <td>
                             <font color="grey" size="2">
                                 <%= comment.votes.size %> points by 
-                                <a href="/users/<%= comment.user_id %>"><font color="green"><%= current_user.name%></font></a> 
+                                <a href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= current_user.name%></font></a> 
                                 <%=( (Time.now() - comment.created_at)/3600).round %> hours ago | 
+                                <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
+                                <a href="/comments/<%= comment.id %>/edit">edit</a> | 
                                 on: <%= comment.submission.title %>
                             </font>
                         </td>
