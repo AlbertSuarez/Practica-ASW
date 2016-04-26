@@ -1,5 +1,15 @@
 class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
+  
+  def vote
+    @reply = Reply.find(params[:id])
+    begin
+      User.find(params[:reply][:user_id]).vote_for(@reply)
+    rescue Exception
+      # lmao who cares
+    end
+    redirect_to request.referer
+  end
 
   # GET /replies
   # GET /replies.json

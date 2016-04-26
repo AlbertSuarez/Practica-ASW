@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   #### votes ####
   post 'submissions/:id/vote' => 'submissions#vote'
   post 'comments/:id/vote' => 'comments#vote'
+  post 'replies/:id/vote' => 'replies#vote'
   ###############
   
   get 'ask' => 'submissions#ask'
