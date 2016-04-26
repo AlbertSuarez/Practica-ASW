@@ -1,6 +1,16 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   
+  def vote
+    @comment = Comment.find(params[:id])
+    begin
+      User.find(params[:reply][:user_id]).vote_for(@comment)
+    rescue Exception
+      # lmao who cares
+    end
+    redirect_to request.referer
+  end
+  
   def new_reply
     @comment = Comment.find(params[:id])
     @replies = Reply.where("comment_id=?",@comment.id).order("created_at DESC")
