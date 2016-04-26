@@ -4,13 +4,13 @@ class SubmissionsController < ApplicationController
   # GET /submissions
   # GET /submissions.json
   def index
-    @submissions = Submission.all
+    @submissions = Submission.all.order("created_at DESC")
   end
   
   # GET /submissions/ask
   # GET /submissions/ask.json
   def ask
-    @submissions = Submission.all
+    @submissions = Submission.all.order("created_at DESC")
   end
 
   # GET /submissions/1

@@ -42,10 +42,11 @@
           <td>
             <table>
               <tbody>
+                <% i=1 %>
                 <% @submissions.each do |submission| %>
                 <% if submission.url != ""%>
                 <tr>
-                  <td><font color="grey" size="3"><%= submission.id %>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
+                  <td><font color="grey" size="3"><%=i%>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font> <font color="grey" size="2">(<%= submission.url %>)</font></td>
                 </tr>
                 <tr>
                   <td>
@@ -56,6 +57,7 @@
                   </td>
                 </tr>
                 <tr class="spacer" style="height:5px"></tr>
+                <% i += 1 %>
                 <% end %> 
                 <% end %>                
               </tbody>
