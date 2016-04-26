@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  acts_as_voter
   has_many :submissions
   validates :name, presence: true
   validates :password, presence: true
