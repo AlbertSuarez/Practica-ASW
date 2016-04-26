@@ -1,108 +1,122 @@
 <head>
-     <title>Submission <% @submission.id %> | Hackers News</title>
+    <title>Submission <% @submission.id %> | Hackers News</title>
 </head>
- 
+
 <body>
 <center>
     <table bgcolor="#f6f6ef" border="0" cellpadding="0" cellspacing="0" width="85%">
         <tr>
-          <td bgcolor="ff6600">
-            <table style="padding=2px" border="0" cellpadding="0" cellspacing="0" width="100%">
-              <tbody>
-                <tr>
-                  <td style="width:18px;padding-right:4px">
-                    <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></img></a>
-                  </td>
-                  <td class="header">
-                    <font size="4"> <b><a href="/">Hacker News</a></b>
-                                    </font><font size="3"> <a href="/">new</a> | <a href="/ask"><font>ask</font></a> | <a href="/submissions/new">submit</a></font>
-                  </td>
-                  <td>
-                    <font size="3">
-                      <div align="right">
-                        <% if current_user %>
-                          Signed in as <strong>
-                            <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
-                            </strong> | 
-                          <%= link_to "Sign out", signout_path, id: "sign_out" %>
-                          <% else %>
-                          <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
-                          <% end %>
-                      </div>
-                    </font>
-                  </td>
-                  <td class="spacer" style="width:10px"></td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
+            <td bgcolor="ff6600">
+                <table style="padding:2px" border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                    <tr>
+                        <td style="width:18px;padding-right:4px">
+                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                        </td>
+                        <td class="header">
+                            <font size="4"> <b><a href="/">Hacker News</a></b>
+                            </font><font size="3"> <a href="/">new</a> | <a href="/ask"><font>ask</font></a> | <a
+                                href="/submissions/new">submit</a></font>
+                        </td>
+                        <td>
+                            <font size="3">
+                                <div align="right">
+                                    <% if current_user %>
+                                    Signed in as <strong>
+                                    <%= link_to current_user.name, "/users/#{current_user.id}", id: "my_profile" %>
+                                </strong> |
+                                    <%= link_to "Sign out", signout_path, id: "sign_out" %>
+                                    <% else %>
+                                    <%= link_to "Log in", "/auth/google_oauth2", id: "sign_in" %>
+                                    <% end %>
+                                </div>
+                            </font>
+                        </td>
+                        <td class="spacer" style="width:10px"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
         </tr>
         <tr style="height:10px"></tr>
         <tr>
-          <td>
-             <div style="color:grey;margin-left:10px">
-                 <a href=<%= @submission.url %>>
-                     <%= @submission.title %>
-                 </a>
-                 <br>
-                  submitted by <a href="/users/<%= @submission.user.id %>">
+            <td>
+                <div style="color:grey;margin-left:10px">
+                    <form action="/submissions/<%= @submission.id %>/vote" method="POST"
+                          id="upvote_submission_form">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <% if current_user && !current_user.voted_for?(@submission) %>
+                        <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                        <input type="image" name="submit_vote" src="/grayarrow.gif">
+                        <% else if !current_user %>
+                        <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                        <% end %>
+                    </form>
+                    <% end %>
+                    <a href=<%= @submission.url %>>
+                        <%= @submission.title %>
+                    </a>
+                    <br>
+                    submitted by <a href="/users/<%= @submission.user.id %>">
                     <%=@submission.user.name%></a>
-                  <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago 
-                  | <%= @comments.length %> comments
-              </div>
-                  
-    
-             <div style="margin-left:20px">
-                     <form action="/comments" method="POST" id="comment_content_form">
-                         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                         <% if current_user %>
-                             <input type="hidden" name="comment[user_id]" value=<%=current_user.id %>>
-                         <% else %>
-                             <input type="hidden" name="comment[user_id]" value=<%= %>> <!-- definir q fer si no està logged -->
-                         <% end %>
-                         <input type="hidden" name="comment[submission_id]" value=<%=@submission.id %>>
-                         <textarea name="comment[content]" value="" form="comment_content_form" style="min-width:500px;min-height:100px"></textarea>
-                         <br>
-                         <input type="submit" value="add comment">
-                     </form>
-             </div>
-             <br>
-             <br>
-            
-               <% @comments.each do |comentari| %>
-                   <div style="margin-left:10px">                    
+                    <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
+                    | <%= @comments.length %> comments
+                </div>
+
+
+                <div style="margin-left:20px">
+                    <form action="/comments" method="POST" id="comment_content_form">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <% if current_user %>
+                        <input type="hidden" name="comment[user_id]" value=<%=current_user.id %>>
+                        <% else %>
+                        <input type="hidden" name="comment[user_id]" value=<%= %>>
+                        <!-- definir q fer si no està logged -->
+                        <% end %>
+                        <input type="hidden" name="comment[submission_id]" value=<%=@submission.id %>>
+                        <textarea name="comment[content]" value="" form="comment_content_form"
+                                  style="min-width:500px;min-height:100px"></textarea>
+                        <br>
+                        <input type="submit" value="add comment">
+                    </form>
+                </div>
+                <br>
+                <br>
+
+                <% @comments.each do |comentari| %>
+                <div style="margin-left:10px">
                     <table>
-                      <tr>
-                        <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
-                        <a href="/comments/<%= comentari.id %>/new_reply">
-                          <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
-                      </tr>
-                      <tr>
-                        <td style="color:grey;"> <%= comentari.content %></td>
-                      </tr>
+                        <tr>
+                            <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
+                                <a href="/comments/<%= comentari.id %>/new_reply">
+                                    <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
+                        </tr>
+                        <tr>
+                            <td style="color:grey;"> <%= comentari.content %></td>
+                        </tr>
                     </table>
                     <a href="/comments/<%= comentari.id %>/new_reply">reply</a>
-                   </div>
-    
-                        <%@replies=Reply.where("comment_id=?",comentari.id).order("created_at DESC")%>
-                            <% @replies.each do |reply| %>
-                                <div style="color:grey;margin-left:25px">
-                                    <table>
-                                      <tr>
-                                        <td><a href="/users/<%= reply.comment.user.id %>"><%= reply.user.name %></a>
-                                        <a href="/comments/<%= reply.comment.id %>/new_reply">
-                                          <%=( (Time.now() - reply.created_at)/3600).round %> hours ago</a></td>
-                                      </tr>
-                                      <tr>
-                                        <td> <%= reply.content %></td>
-                                      </tr>
-                                    </table>
-                                </div>
-                        <% end %>
+                </div>
+
+                <%@replies=Reply.where("comment_id=?",comentari.id).order("created_at DESC")%>
+                <% @replies.each do |reply| %>
+                <div style="color:grey;margin-left:25px">
+                    <table>
+                        <tr>
+                            <td><a href="/users/<%= reply.comment.user.id %>"><%= reply.user.name %></a>
+                                <a href="/comments/<%= reply.comment.id %>/new_reply">
+                                    <%=( (Time.now() - reply.created_at)/3600).round %> hours ago</a></td>
+                        </tr>
+                        <tr>
+                            <td> <%= reply.content %></td>
+                        </tr>
+                    </table>
+                </div>
+                <% end %>
                 <br>
-              <% end %>
-          </td>
+                <% end %>
+            </td>
         </tr>
     </table>
-  </center>
+</center>
 </body>
