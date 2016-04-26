@@ -43,16 +43,21 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment.submission, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+    
+    if current_user
+      @comment = Comment.new(comment_params)
+  
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to @comment.submission, notice: 'Comment was successfully created.' }
+          format.json { render :show, status: :created, location: @comment }
+        else
+          format.html { redirect_to @comment.submission, notice: 'Comment not created, you have to fill de field content' }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to "/auth/google_oauth2"
     end
   end
 
