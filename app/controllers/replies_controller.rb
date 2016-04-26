@@ -34,18 +34,23 @@ class RepliesController < ApplicationController
   # POST /replies
   # POST /replies.json
   def create
-    @reply = Reply.new(reply_params)
-
-    # respond_to do |format|
-      if @reply.save
-        # format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
-        redirect_to @reply.comment.submission
-        # format.json { render :show, status: :created, location: @reply }
-      else
-        format.html { render :new }
-        format.json { render json: @reply.errors, status: :unprocessable_entity }
-      end
-    # end
+    
+    if current_user
+      @reply = Reply.new(reply_params)
+  
+      # respond_to do |format|
+        if @reply.save
+          # format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
+          redirect_to @reply.comment.submission
+          # format.json { render :show, status: :created, location: @reply }
+        else
+          format.html { redirect_to "/comments/" + @reply.comment.id + "/new_reply", notice: 'Reply not created, you have to fill de field content' }
+          format.json { render json: @reply.errors, status: :unprocessable_entity }
+        end
+      # end
+    else
+      redirect_to "/auth/google_oauth2"
+    end
   end
 
   # PATCH/PUT /replies/1
