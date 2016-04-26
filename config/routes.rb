@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'comments/:id/new_reply' => 'comments#new_reply'
   post 'submissions/:id/vote' => 'submissions#vote'
   get 'ask' => 'submissions#ask'
+  get 'threads' => 'comments#threads'
   
   ##########authentication stuff---> don't touch!###############
   

@@ -14,9 +14,12 @@
                             <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
                         </td>
                         <td class="header">
-                            <font size="4"> <b><a href="/">Hacker News</a></b>
-                            </font><font size="3"> <a href="/"><font color="white">new</font></a> | <a
-                                href="/ask">ask</a> | <a href="/submissions/new">submit</a></font>
+                            <font size="4"> <b><a href="/">Hacker News</a></b></font>
+                            <font size="3"> 
+                                <a href="/"><font color="white">new</font></a> | 
+                                <%if current_user %> <a href="/threads">threads</a> | <% end %>
+                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a>
+                            </font>
                         </td>
                         <td>
                             <font size="3">

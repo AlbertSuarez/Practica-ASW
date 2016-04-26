@@ -17,8 +17,8 @@
                             <font size="4"> <b><a href="/">Hacker News</a></b></font>
                             <font size="3"> 
                                 <a href="/">new</a> | 
-                                <%if current_user %> <a href="/threads">threads</a> | <% end %>
-                                <a href="/ask"><font color="white">ask</font></a> | <a href="/submissions/new">submit</a>
+                                <%if current_user %> <a href="/threads"><font color="white">threads</font></a> | <% end %>
+                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a>
                             </font>
                         </td>
                         <td>
@@ -42,34 +42,8 @@
             </td>
         </tr>
         <tr style="height:10px"></tr>
-        <tr>
-          <td>
-            <table>
-              <tbody>
-                <% i=1 %>
-                <% @submissions.each do |submission| %>
-                <% if submission.url == ""%>
-                <tr>
-                  <td><font color="grey" size="3"><%= i %>. <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font> </font></td>
-                </tr>
-                <tr>
-                  <td>
-                    <font color="grey" size="2">
-                      0 points by <a href="/users/<%= submission.user_id %>"><%= submission.user.name %></a>
-                      <a href="/submissions/<%= submission.id %>"><%=( (Time.now() - submission.created_at)/3600).round %> hours ago</a> | <a href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?', submission.id).length %></a> comments
-                    </font>
-                  </td>
-                </tr>
-                <tr class="spacer" style="height:5px"></tr>
-                <% i += 1 %>
-                <% end %>
-                <% end %>                
-              </tbody>
-            </table>
-          </td>
-        </tr>
-
-      </tbody>
+        
+        </tbody>
     </table>
-  </center>
+</center>
 </body>
