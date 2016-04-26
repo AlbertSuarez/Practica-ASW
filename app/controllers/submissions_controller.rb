@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
     rescue Exception
       # lmao who cares
     end
-    redirect_to "/"
+    redirect_to request.referer
   end
 
   # GET /submissions
