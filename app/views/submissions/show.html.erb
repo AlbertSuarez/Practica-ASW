@@ -55,7 +55,7 @@
                         <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
                         <% end %>
                     </form>
-                    <a href=<%= @submission.url %>>
+                    <a href="/submissions/<%= @submission.id %>">
                         <%= @submission.title %>
                     </a>
                     <br>
@@ -63,6 +63,8 @@
                     <%=@submission.user.name%></a>
                     <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
                     | <%= @comments.length %> comments
+                    <br>
+                    <%=@submission.text%>
                 </div>
 
 
