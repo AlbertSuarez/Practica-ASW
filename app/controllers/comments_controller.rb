@@ -19,6 +19,11 @@ class CommentsController < ApplicationController
   def threads
     @comments = Comment.all.order("created_at DESC")
   end
+  
+  def user_comments
+    @user = User.find(params[:user])
+    @comments = Comment.all.order("created_at DESC")
+  end
 
   # GET /comments
   # GET /comments.json
