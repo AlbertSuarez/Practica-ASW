@@ -10,6 +10,11 @@ class SubmissionsController < ApplicationController
     end
     redirect_to request.referer
   end
+  
+  def user_submissions
+    @user = User.find(params[:user])
+    @submissions = Submission.all.order("created_at DESC")
+  end
 
   # GET /submissions
   # GET /submissions.json

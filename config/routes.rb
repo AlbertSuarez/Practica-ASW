@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'ask' => 'submissions#ask'
   get 'threads' => 'comments#threads'
   get 'user_comments' => 'comments#user_comments'
+  get 'user_submissions' => 'submissions#user_submissions'
   
   ##########authentication stuff---> don't touch!###############
   

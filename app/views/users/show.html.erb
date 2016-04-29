@@ -79,8 +79,12 @@
                   
                   <% if current_user && current_user.name == @user.name %>
                   <%= link_to 'My comments', threads_path() %>
+                  <strong> | </strong>
+                  <%= link_to 'My submissions', user_submissions_path(:user => @user.id) %>
                   <% else %>
                   <%= link_to 'Comments', user_comments_path(:user => @user.id) %>
+                  <strong> | </strong>
+                  <%= link_to 'Submissions', user_submissions_path(:user => @user.id) %>
                   <% end %>
                   
                 </div>
