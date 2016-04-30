@@ -44,7 +44,7 @@
         </tr>
         <tr style="height:10px"></tr>
             <td>
-                <% @comments.each do |comment| %>
+                <% @commentsandreplies.each do |comment| %>
                 <% if comment.user_id == current_user.id%>
                 <table>
                     <tbody>
@@ -59,9 +59,17 @@
                                 <%= comment.votes.size %> points by 
                                 <a href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= current_user.name%></font></a> 
                                 <%=( (Time.now() - comment.created_at)/3600).round %> hours ago | 
-                                <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
-                                <a href="/comments/<%= comment.id %>/edit">edit</a> | 
-                                on: <%= comment.submission.title %>
+                                
+                                <% if comment.kind_of? Comment %>
+                                    <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
+                                    <a href="/comments/<%= comment.id %>/edit">edit</a> | 
+                                    on: <%= comment.submission.title %>
+                                <% end %>
+                                <% if comment.kind_of? Reply %>
+                                    <a href="/comments/<%= comment.comment_id %>/new_reply">parent</a> | 
+                                    <a href="/replies/<%= comment.id %>/edit">edit</a> | 
+                                    on: <%= comment.comment.content %>
+                                <% end %>
                             </font>
                         </td>
                     </tr>

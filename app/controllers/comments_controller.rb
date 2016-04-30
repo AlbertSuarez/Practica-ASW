@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   end
   
   def threads
-    @comments = Comment.all.order("created_at DESC")
+    @commentsandreplies = Comment.all.order("created_at DESC") | Reply.all.order("created_at DESC")
   end
   
   def user_comments
