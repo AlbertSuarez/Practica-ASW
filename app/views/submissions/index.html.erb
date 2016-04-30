@@ -85,10 +85,27 @@
                             <font color="grey" size="2">
                                 <%= submission.votes.size %> points by <a href="/users/<%= submission.user_id %>"><%=
                                 submission.user.name %></a>
-                                <a href="/submissions/<%= submission.id %>"><%=( (Time.now() -
-                                    submission.created_at)/3600).round %> hours ago</a> | <a
+                                
+                                <% time = (Time.now() - submission.created_at) %>
+                                
+                                <% if time < 3600 %>
+                                <a href="/submissions/<%= submission.id %>"><%= (time/60).round %> minutes ago</a> | <a
                                     href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?',
                                 submission.id).length %></a> comments
+                                <% end %>
+                            
+                                <% if time < 3600*24 %>
+                                <a href="/submissions/<%= submission.id %>"><%= (time/3600).round %> hours ago</a> | <a
+                                    href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?',
+                                submission.id).length %></a> comments
+                                <% end %>
+                                
+                                <% if time >= 3600*24 %>
+                                <a href="/submissions/<%= submission.id %>"><%= (time/(3600*24)).round %> days ago</a> | <a
+                                    href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?',
+                                submission.id).length %></a> comments
+                                <% end %>
+                            
                             </font>
                         </td>
                     </tr>
