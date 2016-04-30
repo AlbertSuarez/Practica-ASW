@@ -68,8 +68,23 @@
                     <br>
                     submitted by <a href="/users/<%= @submission.user.id %>">
                     <%=@submission.user.name%></a>
-                    <%=( (Time.now() - @submission.created_at)/3600).round %> hours ago
-                    | <%= @comments.length %> comments
+                    
+                    <% time = (Time.now() - @submission.created_at) %>
+                                
+                    <% if time < 3600 %>
+                        <%= (time/60).round %> minutes ago | 
+                    <% end %>
+                
+                    <% if time >= 3600 && time < 3600*24 %>
+                        <%= (time/3600).round %> hours ago | 
+                    <% end %>
+                    
+                    <% if time >= 3600*24 %>
+                        <%= (time/(3600*24)).round %> days ago | 
+                    <% end %>
+                    
+                    <%= Comment.where('submission_id = ?', @submission.id).length %> comments
+                    
                     <br>
                     <%=@submission.text%>
                 </div>
@@ -120,8 +135,21 @@
                         <% end %>
                         </td>
                             <td><a href="/users/<%= comentari.user.id %>"><%= comentari.user.name %></a>
-                                <a href="/comments/<%= comentari.id %>/new_reply">
-                                    <%=( (Time.now() - comentari.created_at)/3600).round %> hours ago</a></td>
+                            
+                            <% time = (Time.now() - comentari.created_at) %>
+                                
+                            <% if time < 3600 %>
+                                <a href="/comments/<%= comentari.id %>/new_reply"><%= (time/60).round %> minutes ago</a> | 
+                            <% end %>
+                        
+                            <% if time >= 3600 && time < 3600*24 %>
+                                <a href="/comments/<%= comentari.id %>/new_reply"><%= (time/3600).round %> hours ago</a> | 
+                            <% end %>
+                            
+                            <% if time >= 3600*24 %>
+                                <a href="/comments/<%= comentari.id %>/new_reply"><%= (time/(3600*24)).round %> days ago</a> | 
+                            <% end %>
+                            
                         </tr>
                         </table>
                         <table>
@@ -156,8 +184,21 @@
                             <% end %>
                             </td>
                             <td><a href="/users/<%= reply.comment.user.id %>"><%= reply.user.name %></a>
-                                <a href="/comments/<%= reply.comment.id %>/new_reply">
-                                    <%=( (Time.now() - reply.created_at)/3600).round %> hours ago</a></td>
+
+                                <% time = (Time.now() - reply.created_at) %>
+                                    
+                                <% if time < 3600 %>
+                                    <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/60).round %> minutes ago</a> | 
+                                <% end %>
+                            
+                                <% if time >= 3600 && time < 3600*24 %>
+                                    <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/3600).round %> hours ago</a> | 
+                                <% end %>
+                                
+                                <% if time >= 3600*24 %>
+                                    <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/(3600*24)).round %> days ago</a> | 
+                                <% end %>
+                                
                         </tr>
                         </table><table>
                         <tr>
