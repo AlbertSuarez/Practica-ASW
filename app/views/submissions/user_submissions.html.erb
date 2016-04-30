@@ -52,22 +52,28 @@
               <table>
                   <tbody>
                   <tr>
-                      <td>
-                          <font color="grey" size="3"><%= i %>.</font>
-                      </td>
-                      <td>
-                          <form action="/submissions/<%= submission.id %>/vote" method="POST"
-                                id="upvote_submission_form">
-                              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                              <% if current_user && !current_user.voted_for?(submission) %>
-                              <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
-                              <input type="image" name="submit_vote" src="grayarrow.gif">
-                              <% else if !current_user %>
-                              <a href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
+                      <% if current_user && submission.user_id == current_user.id%>
+                        <td>
+                            <font color="#ff6600" size="3">*</font>
+                        </td>
+                      <% else %>
+                          <td>
+                              <font color="grey" size="3"><%= i %>.</font>
+                          </td>
+                          <td>
+                              <form action="/submissions/<%= submission.id %>/vote" method="POST"
+                                    id="upvote_submission_form">
+                                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                                  <% if current_user && !current_user.voted_for?(submission) %>
+                                  <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                                  <input type="image" name="submit_vote" src="grayarrow.gif">
+                                  <% else if !current_user %>
+                                  <a href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
+                                  <% end %>
+                              </form>
                               <% end %>
-                          </form>
-                          <% end %>
-                      </td>
+                          </td>
+                      <% end %>
                       <td>
                           <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font></font> 
                           <% if submission.url != ""%>
