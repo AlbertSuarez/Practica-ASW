@@ -52,21 +52,24 @@
                     <tbody>
                     <tr>
                         <td class="spacer" style="width:2px"></td>
-                        <% if current_user && comment.user_id == current_user.id%>
                         <td>
-                            <font color="#ff6600" size="3">*</font>
+                            <% if current_user != nil && current_user.id != @user.id %>
+                                <form action="/comments/<%= comment.id %>/vote" method="POST"
+                                  id="upvote_reply_form">
+                                    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                                    <% if current_user && !current_user.voted_for?(comment) %>
+                                    <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
+                                    <input type="image" name="submit_vote" src="/grayarrow.gif">
+                                    <% elsif !current_user %>
+                                    <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                                    <% end %>
+                                </form>
+                            <% elsif current_user != nil %>
+                                <font color="orange" size="3">*</font>
+                            <% else %>
+                                <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                            <% end %>
                         </td>
-                        <% else %>
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <!-- Votar comment -->
-                        <% end %>
                         <td class="spacer" style="width:5px"></td>
                         <td>
                             <font color="grey" size="2">
