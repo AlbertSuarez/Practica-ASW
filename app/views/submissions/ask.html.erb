@@ -53,7 +53,7 @@
                     <tr>
                         <td><font color="grey" size="3"><%= i %>.</font></td>
                         <td>
-                            <% if current_user.id != submission.user.id %>
+                            <% if current_user != nil && current_user.id != submission.user.id %>
                                 <form action="/submissions/<%= submission.id %>/vote" method="POST"
                                       id="upvote_submission_form">
                                     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -64,8 +64,10 @@
                                     <a href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
                                     <% end %>
                                 </form>
-                            <% else %>
+                            <% elsif current_user != nil %>
                                 <font color="orange" size="3">*</font>
+                            <% else %>
+                                <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
                             <% end %>
                         </td>
                         <td><font color="black" size="3"><a href="/submissions/<%= submission.id %>"><%= submission.title
