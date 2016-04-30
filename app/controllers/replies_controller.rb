@@ -38,16 +38,15 @@ class RepliesController < ApplicationController
     if current_user
       @reply = Reply.new(reply_params)
   
-      # respond_to do |format|
+       respond_to do |format|
         if @reply.save
-          # format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
-          redirect_to @reply.comment.submission
-          # format.json { render :show, status: :created, location: @reply }
+           format.html { redirect_to @reply.comment.submission, notice: 'Reply was successfully created.' }
+           format.json { render :show, status: :created, location: @reply }
         else
-          format.html { redirect_to "/comments/" + @reply.comment.id + "/new_reply", notice: 'Reply not created, you have to fill de field content' }
+          format.html { redirect_to '/comments/' + (@reply.comment.id).to_s + '/new_reply', notice: 'Reply not created, you have to fill de field content' }
           format.json { render json: @reply.errors, status: :unprocessable_entity }
         end
-      # end
+       end
     else
       redirect_to "/auth/google_oauth2"
     end
