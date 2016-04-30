@@ -37,6 +37,7 @@ class RepliesController < ApplicationController
     
     if current_user
       @reply = Reply.new(reply_params)
+      current_user.vote_for(@reply)
   
        respond_to do |format|
         if @reply.save

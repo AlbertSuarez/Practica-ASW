@@ -51,6 +51,8 @@ class CommentsController < ApplicationController
     
     if current_user
       @comment = Comment.new(comment_params)
+      
+      current_user.vote_for(@comment)
   
       respond_to do |format|
         if @comment.save
