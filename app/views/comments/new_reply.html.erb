@@ -12,14 +12,14 @@
                     <tbody>
                     <tr>
                         <td style="width:18px;padding-right:4px">
-                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                            <a style="text-decoration:none;" href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
                         </td>
                         <td class="header">
-                            <font size="4"> <b><a href="/">Hacker News</a></b></font>
+                            <font size="4"> <b><a style="text-decoration:none;" href="/">Hacker News</a></b></font>
                             <font size="3"> 
-                                <a href="/">new</a> | 
-                                <%if current_user %> <a href="/threads">threads</a> | <% end %>
-                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a>
+                                <a style="text-decoration:none;" href="/">new</a> | 
+                                <%if current_user %> <a style="text-decoration:none;" href="/threads">threads</a> | <% end %>
+                                <a style="text-decoration:none;" href="/ask">ask</a> | <a style="text-decoration:none;" href="/submissions/new">submit</a>
                             </font>
                         </td>
                         <td>
@@ -46,7 +46,7 @@
         <tr>
           <td>
             <div style="color:grey;margin-left:10px">
-                <a href="/users/<%= @comment.user.id %>"><%= @comment.user.name %></a>
+                <a style="text-decoration:none;" href="/users/<%= @comment.user.id %>"><%= @comment.user.name %></a>
                 
             <% time = (Time.now() - @comment.created_at) %>
                                     
@@ -88,20 +88,20 @@
             <% @replies.each do |reply| %>
                 <table style="margin-left:10px" >
                   <tr>
-                    <td><a href="/users/<%= reply.user.id %>"><%= reply.user.name %></a>
+                    <td><a style="text-decoration:none;" href="/users/<%= reply.user.id %>"><%= reply.user.name %></a>
 
                     <% time = (Time.now() - reply.created_at) %>
                                     
                     <% if time < 3600 %>
-                        <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/60).round %> minutes ago</a> | 
+                        <a style="text-decoration:none;" href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/60).round %> minutes ago</a> | 
                     <% end %>
                 
                     <% if time >= 3600 && time < 3600*24 %>
-                        <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/3600).round %> hours ago</a> | 
+                        <a style="text-decoration:none;" href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/3600).round %> hours ago</a> | 
                     <% end %>
                     
                     <% if time >= 3600*24 %>
-                        <a href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/(3600*24)).round %> days ago</a> | 
+                        <a style="text-decoration:none;" href="/comments/<%= reply.comment.id %>/new_reply"><%= (time/(3600*24)).round %> days ago</a> | 
                     <% end %>
                       
                   </tr>

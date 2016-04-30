@@ -12,14 +12,14 @@
                     <tbody>
                     <tr>
                         <td style="width:18px;padding-right:4px">
-                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                            <a style="text-decoration:none;" href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
                         </td>
                         <td class="header">
-                            <font size="4"> <b><a href="/">Hacker News</a></b></font>
+                            <font size="4"> <b><a style="text-decoration:none;" href="/">Hacker News</a></b></font>
                             <font size="3"> 
-                                <a href="/">new</a> | 
-                                <%if current_user %> <a href="/threads">threads</a> | <% end %>
-                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a> | 
+                                <a style="text-decoration:none;" href="/">new</a> | 
+                                <%if current_user %> <a style="text-decoration:none;" href="/threads">threads</a> | <% end %>
+                                <a style="text-decoration:none;" href="/ask">ask</a> | <a style="text-decoration:none;" href="/submissions/new">submit</a> | 
                                 <font color="white"><%= @user.name %>'s submissions</font>
                                 
                             </font>
@@ -68,14 +68,14 @@
                                   <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
                                   <input type="image" name="submit_vote" src="grayarrow.gif">
                                   <% else if !current_user %>
-                                  <a href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
+                                  <a style="text-decoration:none;" href="/auth/google_oauth2"><img src="grayarrow.gif"></a>
                                   <% end %>
                               </form>
                               <% end %>
                           </td>
                       <% end %>
                       <td>
-                          <font color="black" size="3"><a href=<%= submission.url %>><%= submission.title %></a></font></font> 
+                          <font color="black" size="3"><a style="text-decoration:none;" href=<%= submission.url %>><%= submission.title %></a></font></font> 
                           <% if submission.url != ""%>
                           <font color="grey" size="2">(<%= submission.url %>)</font>
                           <% end %>
@@ -86,24 +86,24 @@
                   <tr>
                       <td>
                           <font color="grey" size="2">
-                              <%= submission.votes.size %> points by <a href="/users/<%= submission.user_id %>"><%=
+                              <%= submission.votes.size %> points by <a style="text-decoration:none;" href="/users/<%= submission.user_id %>"><%=
                               submission.user.name %></a>
                               
                               <% time = (Time.now() - submission.created_at) %>
                               
                               <% if time < 3600 %>
-                                  <a href="/submissions/<%= submission.id %>"><%= (time/60).round %> minutes ago</a> | 
+                                  <a style="text-decoration:none;" href="/submissions/<%= submission.id %>"><%= (time/60).round %> minutes ago</a> | 
                               <% end %>
                           
                               <% if time >= 3600 && time < 3600*24 %>
-                                  <a href="/submissions/<%= submission.id %>"><%= (time/3600).round %> hours ago</a> | 
+                                  <a style="text-decoration:none;" href="/submissions/<%= submission.id %>"><%= (time/3600).round %> hours ago</a> | 
                               <% end %>
                               
                               <% if time >= 3600*24 %>
-                                  <a href="/submissions/<%= submission.id %>"><%= (time/(3600*24)).round %> days ago</a> | 
+                                  <a style="text-decoration:none;" href="/submissions/<%= submission.id %>"><%= (time/(3600*24)).round %> days ago</a> | 
                               <% end %>
                               
-                              <a href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?', submission.id).length %></a> comments
+                              <a style="text-decoration:none;" href="/submissions/<%= submission.id %>"><%= Comment.where('submission_id = ?', submission.id).length %></a> comments
                               
                           </font>
                       </td>

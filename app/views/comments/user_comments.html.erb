@@ -12,14 +12,14 @@
                     <tbody>
                     <tr>
                         <td style="width:18px;padding-right:4px">
-                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                            <a style="text-decoration:none;" href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
                         </td>
                         <td class="header">
-                            <font size="4"> <b><a href="/">Hacker News</a></b></font>
+                            <font size="4"> <b><a style="text-decoration:none;" href="/">Hacker News</a></b></font>
                             <font size="3"> 
-                                <a href="/">new</a> | 
-                                <%if current_user %> <a href="/threads">threads</a> | <% end %>
-                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a> | 
+                                <a style="text-decoration:none;" href="/">new</a> | 
+                                <%if current_user %> <a style="text-decoration:none;" href="/threads">threads</a> | <% end %>
+                                <a style="text-decoration:none;" href="/ask">ask</a> | <a style="text-decoration:none;" href="/submissions/new">submit</a> | 
                                 <font color="white"><%= @user.name %>'s comments</font>
                                 
                             </font>
@@ -61,22 +61,22 @@
                                     <input type="hidden" name="reply[user_id]" value=<%= current_user.id %>>
                                     <input type="image" name="submit_vote" src="/grayarrow.gif">
                                     <% elsif !current_user %>
-                                    <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                                    <a style="text-decoration:none;" href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
                                     <% end %>
                                 </form>
                             <% elsif current_user != nil %>
                                 <font color="orange" size="3">*</font>
                             <% else %>
-                                <a href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
+                                <a style="text-decoration:none;" href="/auth/google_oauth2"><img src="/grayarrow.gif"></a>
                             <% end %>
                         </td>
                         <td class="spacer" style="width:5px"></td>
                         <td>
                             <font color="grey" size="2">
                                 <%= comment.votes.size %> points by 
-                                <a href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= @user.name%></font></a> 
+                                <a style="text-decoration:none;" href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= @user.name%></font></a> 
                                 <%=( (Time.now() - comment.created_at)/3600).round %> hours ago | 
-                                <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
+                                <a style="text-decoration:none;" href="/submissions/<%= comment.submission_id %>">parent</a> | 
                                 on: <%= comment.submission.title %>
                             </font>
                         </td>

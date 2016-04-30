@@ -12,14 +12,14 @@
                     <tbody>
                     <tr>
                         <td style="width:18px;padding-right:4px">
-                            <a href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
+                            <a style="text-decoration:none;" href="/"><img src="<%= asset_path( 'y18.gif' ) %>"></a>
                         </td>
                         <td class="header">
-                            <font size="4"> <b><a href="/">Hacker News</a></b></font>
+                            <font size="4"> <b><a style="text-decoration:none;" href="/">Hacker News</a></b></font>
                             <font size="3"> 
-                                <a href="/">new</a> | 
-                                <%if current_user %> <a href="/threads"><font color="white">threads</font></a> | <% end %>
-                                <a href="/ask">ask</a> | <a href="/submissions/new">submit</a>
+                                <a style="text-decoration:none;" href="/">new</a> | 
+                                <%if current_user %> <a style="text-decoration:none;" href="/threads"><font color="white">threads</font></a> | <% end %>
+                                <a style="text-decoration:none;" href="/ask">ask</a> | <a style="text-decoration:none;" href="/submissions/new">submit</a>
                             </font>
                         </td>
                         <td>
@@ -57,7 +57,7 @@
                         <td>
                             <font color="grey" size="2">
                                 <%= comment.votes.size %> points by 
-                                <a href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= current_user.name%></font></a> 
+                                <a style="text-decoration:none;" href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= current_user.name%></font></a> 
                                 
                                 <% time = (Time.now() - comment.created_at) %>
                                 
@@ -74,13 +74,13 @@
                                 <% end %>
                                 
                                 <% if comment.kind_of? Comment %>
-                                    <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
-                                    <a href="/comments/<%= comment.id %>/edit">edit</a> | 
+                                    <a style="text-decoration:none;" href="/submissions/<%= comment.submission_id %>">parent</a> | 
+                                    <a style="text-decoration:none;" href="/comments/<%= comment.id %>/edit">edit</a> | 
                                     on: <%= comment.submission.title %>
                                 <% end %>
                                 <% if comment.kind_of? Reply %>
-                                    <a href="/comments/<%= comment.comment_id %>/new_reply">parent</a> | 
-                                    <a href="/replies/<%= comment.id %>/edit">edit</a> | 
+                                    <a style="text-decoration:none;" href="/comments/<%= comment.comment_id %>/new_reply">parent</a> | 
+                                    <a style="text-decoration:none;" href="/replies/<%= comment.id %>/edit">edit</a> | 
                                     on: <%= comment.comment.content %>
                                 <% end %>
                                 
