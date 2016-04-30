@@ -58,7 +58,20 @@
                             <font color="grey" size="2">
                                 <%= comment.votes.size %> points by 
                                 <a href="/users/<%= comment.user_id %>"><font color="#3c963c"><%= current_user.name%></font></a> 
-                                <%=( (Time.now() - comment.created_at)/3600).round %> hours ago | 
+                                
+                                <% time = (Time.now() - comment.created_at) %>
+                                
+                                <% if time < 3600 %>
+                                    <%= (time/60).round %> minutes ago | 
+                                <% end %>
+                            
+                                <% if time >= 3600 && time < 3600*24 %>
+                                    <%= (time/3600).round %> hours ago | 
+                                <% end %>
+                                
+                                <% if time >= 3600*24 %>
+                                    <%= (time/(3600*24)).round %> days ago | 
+                                <% end %>
                                 
                                 <% if comment.kind_of? Comment %>
                                     <a href="/submissions/<%= comment.submission_id %>">parent</a> | 
@@ -70,6 +83,7 @@
                                     <a href="/replies/<%= comment.id %>/edit">edit</a> | 
                                     on: <%= comment.comment.content %>
                                 <% end %>
+                                
                             </font>
                         </td>
                     </tr>
