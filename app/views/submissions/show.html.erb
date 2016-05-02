@@ -84,12 +84,15 @@
                     <% end %>
                     
                     <%= Comment.where('submission_id = ?', @submission.id).length %> comments
-                    
+                    <br>
                     <br>
                     <%=@submission.text%>
+                    <br>
                 </div>
 
 
+                
+                
                 <div style="margin-left:20px">
                     <form action="/comments" method="POST" id="comment_content_form">
                         <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
