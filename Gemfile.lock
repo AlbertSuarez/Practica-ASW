@@ -190,9 +190,9 @@ DEPENDENCIES
   jbuilder (= 2.2.3)
   jquery-rails (= 4.0.3)
   omniauth-google-oauth2 (~> 0.2.1)
-  pg
+  pg (= 0.17.1)
   rails (= 4.2.2)
-  rails_12factor
+  rails_12factor (= 0.0.2)
   sass-rails (= 5.0.2)
   sdoc (= 0.4.0)
   spring (= 1.1.3)
