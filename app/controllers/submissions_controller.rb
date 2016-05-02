@@ -47,7 +47,7 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
-    current_user.vote_for(@submission)
+    current_user&.vote_for(@submission)
 
     respond_to do |format|
       if @submission.save
