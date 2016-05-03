@@ -47,10 +47,10 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
-    current_user&.vote_for(@submission)
 
     respond_to do |format|
       if @submission.save
+        current_user&.vote_for(@submission)
         format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
         format.json { render :show, status: :created, location: @submission }
       else

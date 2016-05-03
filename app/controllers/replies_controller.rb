@@ -37,10 +37,11 @@ class RepliesController < ApplicationController
     
     if current_user
       @reply = Reply.new(reply_params)
-      current_user&.vote_for(@reply)
+      
   
        respond_to do |format|
         if @reply.save
+           current_user&.vote_for(@reply)
            format.html { redirect_to @reply.comment.submission, notice: 'Reply was successfully created.' }
            format.json { render :show, status: :created, location: @reply }
         else
