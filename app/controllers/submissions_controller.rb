@@ -46,7 +46,11 @@ class SubmissionsController < ApplicationController
   # POST /submissions
   # POST /submissions.json
   def create
-    @submission = Submission.new(submission_params)
+    parameters = submission_params
+    if !submission_params[:url].start_with?('http')
+      parameters[:url] = 'http://' + submission_params[:url]
+    end
+    @submission = Submission.new(parameters)
 
     respond_to do |format|
       if @submission.save
