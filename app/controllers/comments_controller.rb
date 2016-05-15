@@ -14,7 +14,10 @@ class CommentsController < ApplicationController
     begin
       auth_user.vote_for(@comment)
     rescue
-      # ok
+      respond_to do |format|
+      format.html {redirect_to request.referer}
+      format.json { render :json => {"fucked" => auth_user&.id} }
+    end
     end
     respond_to do |format|
       format.html {redirect_to request.referer}
