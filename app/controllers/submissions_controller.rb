@@ -12,8 +12,12 @@ class SubmissionsController < ApplicationController
   end
   
   def user_submissions
-    @user = User.find(params[:user])
-    @submissions = Submission.all.order("created_at DESC")
+    begin
+      @user = User.find(params[:user])
+      @submissions = Submission.where("user_id=?", params[:user]).order("created_at DESC")
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
+    end
   end
 
   # GET /submissions
