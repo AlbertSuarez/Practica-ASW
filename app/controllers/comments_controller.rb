@@ -5,6 +5,8 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     auth_user = current_user
     begin
+      puts request.headers["api_key"]
+      puts User.where("oauth_token=?", request.headers["api_key"]).to_s
       if (User.where("oauth_token=?", request.headers["api_key"])[0])
         auth_user = tmp
       end
@@ -14,11 +16,7 @@ class CommentsController < ApplicationController
     begin
       auth_user.vote_for(@comment)
     rescue
-      respond_to do |format|
-      format.html {redirect_to request.referer}
-      render :json => {"fucked" => auth_user&.id}
-      return
-    end
+      # ok
     end
     respond_to do |format|
       format.html {redirect_to request.referer}
