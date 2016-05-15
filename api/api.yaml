@@ -6,44 +6,172 @@ swagger: '2.0'
 # This is your document metadata
 info:
   version: "1.0.0"
-  title: HackNew
+  title: Hacker News
+
+# Describe your segurity definitions here
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    description: És la clau d'usuari generada per l'aplicació de Google.
+    name: api_key
+    in: header
+produces:
+  - application/json
 
 # Describe your paths here
 paths:
-  # This is a path endpoint. Change it.
-  /persons:
-    # This is a HTTP operation
+
+  # Get specific comment info
+  /api/comments/:id:
     get:
-      # Describe this verb here. Note: you can use markdown
+      security:
+        - apiKey: []
       description: |
-        Gets `Person` objects.
-        Optional query param of **size** determines
-        size of returned array
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        -
-          name: size
-          in: query
-          description: Size of array
-          required: true
-          type: number
-          format: double
-      # Expected responses for this operation:
+        Retorna la informació d'un comentari
       responses:
-        # Response code
         200:
           description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
           schema:
-            title: ArrayOfPersons
-            type: array
-            items:
-              title: Person
-              type: object
-              properties:
-                name:
-                  type: string
-                single:
-                  type: boolean
+            $ref: '#/definitions/Comment'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  # Get specific submission info
+  /api/submissions/:id:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna la informació d'un publicació
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  # Get specific reply info
+  /api/replies/:id:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna la informació d'un resposta a un comentari
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Reply'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  # Get specific user info
+  /api/users/:id:
+    get:
+      security:
+        - apiKey: []
+      description: |
+        Retorna la informació d'un usuari
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+# Describe your definitons here
+definitions:
+  
+  # Submission defition
+  Submission:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      url:
+        type: string
+      text:
+        type: string
+      user_id:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  
+  # Comment defintion
+  Comment:
+    type: object
+    properties:
+      id:
+        type: integer
+      content:
+        type: string
+      user_id:
+        type: integer
+      submission_id:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  
+  # Reply definition
+  Reply:
+    type: object
+    properties:
+      id:
+        type: integer
+      content:
+        type: string
+      user_id:
+        type: integer
+      comment_id:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  
+  # User definition
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      about:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  
+  # Error defintion
+  Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        fields:
+          type: string
