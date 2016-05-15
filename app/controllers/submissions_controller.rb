@@ -4,7 +4,7 @@ class SubmissionsController < ApplicationController
   def vote
     @submission = Submission.find(params[:id])
     begin
-      User.find(params[:reply][:user_id]).vote_for(@submission)
+      current_user.vote_for(@submission)
     rescue Exception
       # lmao who cares
     end

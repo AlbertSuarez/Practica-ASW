@@ -4,7 +4,7 @@ class RepliesController < ApplicationController
   def vote
     @reply = Reply.find(params[:id])
     begin
-      User.find(params[:reply][:user_id]).vote_for(@reply)
+      current_user.vote_for(@reply)
     rescue Exception
       # lmao who cares
     end

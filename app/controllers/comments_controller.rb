@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   def vote
     @comment = Comment.find(params[:id])
     begin
-      User.find(params[:reply][:user_id]).vote_for(@comment)
+      current_user.vote_for(@comment)
     rescue Exception
       # lmao who cares
     end
