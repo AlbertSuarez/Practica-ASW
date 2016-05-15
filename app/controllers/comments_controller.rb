@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     auth_user = current_user
     begin
-      puts request.headers["api_key"]
+      puts request.headers
       puts User.where("oauth_token=?", request.headers["api_key"]).to_s
       if (User.where("oauth_token=?", request.headers["api_key"])[0])
         auth_user = tmp
