@@ -21,17 +21,52 @@ produces:
 # Describe your paths here
 paths:
 
+  # GET all coments
+  /comments/:
+    get:
+      description: Retorna tots els comentaris
+      responses:
+        200:
+          description: S'han retornat tots els comentaris.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+        default:
+          description: Error inesperat
+          schema:
+            $ref: '#/definitions/Error'
+            
   # GET specific comment info
-  /api/comments/:id:
+  /comments/:id:
     get:
       description: Retorna la informació d'un comentari
       responses:
         200:
-          description: Successful response
+          description: Comentari retornat
           schema:
             $ref: '#/definitions/Comment'
+        404:
+          description: Comentari no existeix
+          schema:
+            $ref: '#/definitions/Error'
         default:
-          description: Unexpected error
+          description: Error inesperat
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /users/:id/comments:
+    get:
+      description: Retorna tots els comentaris de l'usuari amb id 'id'
+      responses:
+        200:
+          description: S'han retornat els comentaris de l'usuari
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+        404:
+          description: L'usuari no existeix
           schema:
             $ref: '#/definitions/Error'
             
