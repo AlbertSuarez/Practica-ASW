@@ -21,13 +21,12 @@ produces:
 # Describe your paths here
 paths:
 
-  # Get specific comment info
+  # GET specific comment info
   /api/comments/:id:
     get:
       security:
         - apiKey: []
-      description: |
-        Retorna la informació d'un comentari
+      description: Retorna la informació d'un comentari
       responses:
         200:
           description: Successful response
@@ -38,13 +37,12 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # Get specific submission info
+  # GET specific submission info
   /api/submissions/:id:
     get:
       security:
         - apiKey: []
-      description: |
-        Retorna la informació d'un publicació
+      description: Retorna la informació d'un publicació
       responses:
         200:
           description: Successful response
@@ -55,13 +53,12 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # Get specific reply info
+  # GET specific reply info
   /api/replies/:id:
     get:
       security:
         - apiKey: []
-      description: |
-        Retorna la informació d'un resposta a un comentari
+      description: Retorna la informació d'un resposta a un comentari
       responses:
         200:
           description: Successful response
@@ -72,18 +69,71 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # Get specific user info
+  # GET specific user info
   /api/users/:id:
     get:
       security:
         - apiKey: []
-      description: |
-        Retorna la informació d'un usuari
+      description: Retorna la informació d'un usuari
       responses:
         200:
           description: Successful response
           schema:
             $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  # GET url submissions list
+  /api/posts/url:
+    get:
+      security:
+        - apiKey: []
+      description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  # GET ask submissions list
+  /api/posts/ask:
+    get:
+      security:
+        - apiKey: []
+      description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  # GET user threads list
+  /api/posts/:id/threads:
+    get:
+      security:
+        - apiKey: []
+      description: Retorna el llistat de 'threads' que té un usuari.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Thread'
         default:
           description: Unexpected error
           schema:
@@ -98,18 +148,25 @@ definitions:
     properties:
       id:
         type: integer
+        description: identificador unic de la publicació.
       title:
         type: string
+        description: títol de la publicació.
       url:
         type: string
+        description: url associada a la publicació.
       text:
         type: string
+        description: text associat a la publicació.
       user_id:
         type: integer
+        description: identificador de l'usuari creador de la publicació.
       created_at:
         type: string
+        description: instant de creació de la publicació.
       updated_at:
         type: string
+        description: instant de l'última actualització de la publicació.
   
   # Comment defintion
   Comment:
@@ -117,61 +174,98 @@ definitions:
     properties:
       id:
         type: integer
+        description: identificador unic del comentari.
       content:
         type: string
+        description: contingut associat del comentari.
       user_id:
         type: integer
+        description: identificador de l'usuari creador del comentari.
       submission_id:
         type: integer
+        description: identificador de la publicació relacionada.
       created_at:
         type: string
+        description: instant de creació del comentari.
       updated_at:
         type: string
-  
+        description: instant de l'última actualització del comentari.
+
   # Reply definition
   Reply:
     type: object
     properties:
       id:
         type: integer
+        description: identificador unic de la resposta.
       content:
         type: string
+        description: contingut associat de la resposta.
       user_id:
         type: integer
+        description: identificador de l'usuari creador de la resposta.
       comment_id:
         type: integer
+        description: identificador del comentari relacionat.
       created_at:
         type: string
+        description: instant de creació de la resposta.
       updated_at:
         type: string
-  
+        description: instant de l'última actualització de la resposta.
+        
+  # Thread definition
+  Thread:
+    type: object
+    properties:
+      comments:
+        type: array
+        description: llistat de comentaris de l'usuari.
+        items:
+          $ref: "#/definitions/Comment"
+      replies:
+        type: array
+        description: llistat de respostes de l'usuari.
+        items:
+          $ref: "#/definitions/Reply"
+
   # User definition
   User:
     type: object
     properties:
       id:
         type: integer
+        description: identificador unic de l'usuari.
       name:
         type: string
+        description: nom de l'usuari.
       about:
         type: string
+        description: descripció de l'usuari.
       email:
         type: string
+        description: correu de l'usuari.
       password:
         type: string
+        description: contrasenya de l'usuari.
       created_at:
         type: string
+        description: instant de creació de l'usuari.
       updated_at:
         type: string
+        description: instant de l'última actualització de l'usuari.
   
   # Error defintion
   Error:
-      type: object
-      properties:
+    type: object
+    properties:
         code:
           type: integer
+          description: codi de l'error.
           format: int32
         message:
           type: string
+          description: missatge de l'error.
         fields:
           type: string
+          description: camps de l'error.
