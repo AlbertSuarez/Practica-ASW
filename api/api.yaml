@@ -36,6 +36,17 @@ paths:
           description: Error inesperat
           schema:
             $ref: '#/definitions/Error'
+    post:
+      description: Crea un nou comentari
+      responses:
+        201:
+          description: S'ha creat el comentari
+          schema:
+            $ref: '#/definitions/Comment'
+        default:
+          description: Error inesperat
+          schema:
+            $ref: '#/definitions/Error'
             
   # GET specific comment info
   /comments/:id:
@@ -46,6 +57,21 @@ paths:
           description: Comentari retornat
           schema:
             $ref: '#/definitions/Comment'
+        404:
+          description: Comentari no existeix
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperat
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /comments/:id/vote:
+    post:
+      description: Vota el comentari amb id 'id'
+      responses:
+        200:
+          description: S'ha votat el comentari amb l'usuari autenticat.
         404:
           description: Comentari no existeix
           schema:
