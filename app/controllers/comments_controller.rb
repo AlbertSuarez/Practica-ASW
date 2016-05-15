@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     auth_user = current_user
     begin
-      puts "PUTA" + request.headers["HTTP_API_KEY"].to_s
-      if (User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0])
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
         auth_user = tmp
       end
     rescue
