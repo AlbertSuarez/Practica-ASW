@@ -2,6 +2,7 @@
 # Be aware that YAML has indentation based scoping.
 # Code completion support is available so start typing for available options.
 swagger: '2.0'
+host: 'hackernew.herokuapp.com/'
 
 # This is your document metadata
 info:
@@ -22,7 +23,7 @@ produces:
 paths:
 
   # GET all coments
-  /comments/:
+  /comments.json/:
     get:
       description: Retorna tots els comentaris
       responses:
@@ -49,7 +50,7 @@ paths:
             $ref: '#/definitions/Error'
             
   # GET specific comment info
-  /comments/:id:
+  /comments/:id.json:
     get:
       description: Retorna la informació d'un comentari
       responses:
@@ -66,7 +67,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  /comments/:id/vote:
+  /comments/:id/vote.json:
     post:
       description: Vota el comentari amb id 'id'
       responses:
@@ -81,7 +82,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  /users/:id/comments:
+  /users/:id/comments.json:
     get:
       description: Retorna tots els comentaris de l'usuari amb id 'id'
       responses:

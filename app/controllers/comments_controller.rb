@@ -3,12 +3,23 @@ class CommentsController < ApplicationController
   
   def vote
     @comment = Comment.find(params[:id])
+    auth_user = current_user
     begin
-      current_user.vote_for(@comment)
-    rescue Exception
-      # lmao who cares
+      if (User.where("oauth_token=?", request.headers["api_key"])[0])
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
     end
-    redirect_to request.referer
+    begin
+      auth_user.vote_for(@comment)
+    rescue
+      # ok
+    end
+    respond_to do |format|
+      format.html {redirect_to request.referer}
+      format.json { render :json => @comment }
+    end
   end
   
   def new_reply
@@ -26,7 +37,7 @@ class CommentsController < ApplicationController
       @user = User.find(params[:user])
       @comments = Comment.where("user_id=?", params[:user]).order("created_at DESC")
     rescue ActiveRecord::RecordNotFound
-      render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
+      render :json => { "code" => "404", "message" => "User not found."}, status: :not_found
     end
   end
 
