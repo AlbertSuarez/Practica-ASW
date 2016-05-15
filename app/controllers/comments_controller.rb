@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
       respond_to do |format|
       format.html {redirect_to request.referer}
       format.json { render :json => {"fucked" => auth_user&.id} }
+      return
     end
     end
     respond_to do |format|
