@@ -3,4 +3,7 @@ json.set! "_links" do
   json.set! "self" do
     json.set! "href", user_url(@user, format: :json)
   end
+  json.set! "submissions" do
+    json.set! "href", user_url(@user.submissions, format: :json)
+  end
 end
