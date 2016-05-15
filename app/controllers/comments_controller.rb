@@ -22,8 +22,12 @@ class CommentsController < ApplicationController
   end
   
   def user_comments
-    @user = User.find(params[:user])
-    @comments = Comment.all.order("created_at DESC")
+    begin
+      @user = User.find(params[:user])
+      @comments = Comment.where("user_id=?", params[:user]).order("created_at DESC")
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
+    end
   end
 
   # GET /comments
