@@ -103,6 +103,36 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+            
+  /submissions/:id/vote.json:
+    post:
+      description: Vota la publicació amb id 'id'
+      responses:
+        200:
+          description: S'ha votat la publicació amb l'usuari autenticat.
+        404:
+          description: Publicació no existeix
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /users/:id/submissions.json:
+    get:
+      description: Retorna totes els publicacions de l'usuari amb id 'id'
+      responses:
+        200:
+          description: S'han retornat les publicacions de l'usuari
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Submission'
+        404:
+          description: L'usuari no existeix
+          schema:
+            $ref: '#/definitions/Error'
 
 
 #Comments operations
@@ -166,7 +196,8 @@ paths:
           description: Error inesperat
           schema:
             $ref: '#/definitions/Error'
-            
+  
+  
   /users/:id/comments.json:
     get:
       description: Retorna tots els comentaris de l'usuari amb id 'id'
