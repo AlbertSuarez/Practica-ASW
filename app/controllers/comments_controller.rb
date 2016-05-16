@@ -41,6 +41,14 @@ class CommentsController < ApplicationController
       render :json => { "code" => "404", "message" => "User not found."}, status: :not_found
     end
   end
+  
+  def submission_comments
+    begin
+      @comments = Comment.where("submission_id=?", params[:id]).order("created_at DESC")
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "code" => "404", "message" => "Submission not found."}, status: :not_found
+    end
+  end
 
   # GET /comments
   # GET /comments.json

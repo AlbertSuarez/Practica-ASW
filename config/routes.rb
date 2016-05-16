@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'user_submissions' => 'submissions#user_submissions'
   get 'users/:user/submissions' => 'submissions#user_submissions'
   
+  get '/submissions/:id/comments' => 'comments#submission_comments'
+  
   ##########authentication stuff---> don't touch!###############
   
   get 'auth/:provider/callback', to: 'sessions#create'
