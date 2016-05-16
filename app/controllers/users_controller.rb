@@ -78,6 +78,7 @@ class UsersController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
     end
+    @user = auth_user
     
     respond_to do |format|
       if auth_user.update(user_params)
