@@ -3,12 +3,24 @@ class SubmissionsController < ApplicationController
   
   def vote
     @submission = Submission.find(params[:id])
+    auth_user = current_user
     begin
-      current_user.vote_for(@submission)
-    rescue Exception
-      # lmao who cares
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
     end
-    redirect_to request.referer
+    begin
+      auth_user.vote_for(@submission)
+    rescue
+      # ok
+    end
+    respond_to do |format|
+      format.html {redirect_to request.referer}
+      format.json { render :json => @comment }
+    end
   end
   
   def user_submissions
