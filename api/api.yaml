@@ -443,33 +443,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # GET replies by specific user
-  /users/{id}/replies.json:
-    get:
-      description: Retorna tots els replies de l'usuari amb id 'id'.
-      parameters:
-        - name: id
-          in: path
-          description: Identificador de l'usuari.
-          required: true
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: S'han retornat els replies de l'usuari.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Reply'
-        404:
-          description: L'usuari no existeix.
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: Error inesperat.
-          schema:
-            $ref: '#/definitions/Error'
-
 # THREADS OPERATIONS -----------------------------------------------------------            
 
   # GET user threads list
