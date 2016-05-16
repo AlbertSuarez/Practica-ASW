@@ -3,12 +3,24 @@ class RepliesController < ApplicationController
   
   def vote
     @reply = Reply.find(params[:id])
+    auth_user = current_user
     begin
-      current_user.vote_for(@reply)
-    rescue Exception
-      # lmao who cares
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
     end
-    redirect_to request.referer
+    begin
+      auth_user.vote_for(@reply)
+    rescue
+      # ok
+    end
+    respond_to do |format|
+      format.html {redirect_to request.referer}
+      format.json { render :json => @reply }
+    end
   end
 
   # GET /replies
@@ -35,8 +47,19 @@ class RepliesController < ApplicationController
   # POST /replies.json
   def create
     
-    if current_user
+    auth_user = current_user
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
+    end
+    
+    if auth_user
       @reply = Reply.new(reply_params)
+      @reply.user = auth_user
       
   
        respond_to do |format|
