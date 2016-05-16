@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'comments/:id/new_reply' => 'comments#new_reply'
   
+  patch 'users/:id' => 'users#update'
+  
   #### votes ####
   post 'submissions/:id/vote' => 'submissions#vote'
   post 'comments/:id/vote' => 'comments#vote'
