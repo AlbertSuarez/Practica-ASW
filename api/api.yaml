@@ -1,28 +1,27 @@
-# Example YAML to get you started quickly.
-# Be aware that YAML has indentation based scoping.
-# Code completion support is available so start typing for available options.
 swagger: '2.0'
-host: 'hackernew.herokuapp.com/'
+host: 'hackernew.herokuapp.com'
 
-# This is your document metadata
+# METADATA ---------------------------------------------------------------------
 info:
   version: "1.0.0"
   title: Hacker News
 
-# Describe your segurity definitions here
+# SEGURITY DEFITIONS -----------------------------------------------------------
 securityDefinitions:
   apiKey:
     type: apiKey
     description: És la clau d'usuari generada per l'aplicació de Google.
     name: api_key
     in: header
+
+# PRODUCES ---------------------------------------------------------------------
 produces:
   - application/json
 
-# Describe your paths here
+# PATHS LIST -------------------------------------------------------------------
 paths:
 
-#User operations
+# USER OPERATIONS --------------------------------------------------------------
 
   # GET user list
   /users.json:
@@ -30,32 +29,39 @@ paths:
       description: Retorna un llistat de tots els usuaris.
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat tots els usuaris.
           schema:
             type: array
             items:
               $ref: '#/definitions/User'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
 
   # GET specific user info
-  /users/:id.json:
+  /users/{id}.json:
     get:
-      description: Retorna la informació d'un usuari
+      description: Retorna la informació d'un usuari.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del usuari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat l'usuari especificat.
           schema:
             $ref: '#/definitions/User'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
 
 
-#Submissions operations
+# SUBMISSIONS OPERATIONS -------------------------------------------------------
 
    # GET url submissions list
   /submissions.json:
@@ -63,13 +69,13 @@ paths:
       description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat totes les submissions de tipus 'URL'.
           schema:
             type: array
             items:
               $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
           
@@ -79,63 +85,89 @@ paths:
       description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat totes les submissions de tipus 'Ask'.
           schema:
             type: array
             items:
               $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
 
-            
   # GET specific submission info
-  /submissions/:id.json:
+  /submissions/{id}.json:
     get:
-      description: Retorna la informació d'un publicació
+      description: Retorna la informació d'un publicació.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de la publicació.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat la publicació especificada.
           schema:
             $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
-            
-  /submissions/:id/vote.json:
+  
+  # POST vote some submission          
+  /submissions/{id}/vote.json:
     post:
-      description: Vota la publicació amb id 'id'
+      description: Vota la publicació amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de la publicació.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: S'ha votat la publicació amb l'usuari autenticat.
+          description: S'ha votat la publicació especificada amb l'usuari autenticat.
         404:
-          description: Publicació no existeix
+          description: La publicació no existeix.
           schema:
             $ref: '#/definitions/Error'
         default:
-          description: Unexpected error
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
-            
-  /users/:id/submissions.json:
+  
+  # GET submissions by specific user          
+  /users/{id}/submissions.json:
     get:
-      description: Retorna totes els publicacions de l'usuari amb id 'id'
+      description: Retorna totes els publicacions de l'usuari amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de l'usuari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: S'han retornat les publicacions de l'usuari
+          description: S'han retornat les publicacions de l'usuari especificat.
           schema:
             type: array
             items:
               $ref: '#/definitions/Submission'
         404:
-          description: L'usuari no existeix
+          description: L'usuari no existeix.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
 
 
-#Comments operations
+# COMMENTS OPERATIONS
 
   # GET all coments
   /comments.json/:
@@ -214,8 +246,7 @@ paths:
             $ref: '#/definitions/Error'
             
 
-#Replies operations
-
+# REPLIES OPERATIONS
 
   # GET all replies
   /replies.json:
@@ -258,7 +289,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-#Threads            
+# THREADS OPERATIONS            
 
   # GET user threads list
   /threads/:id.json:
