@@ -62,20 +62,37 @@ class SubmissionsController < ApplicationController
   # POST /submissions
   # POST /submissions.json
   def create
-    parameters = submission_params
-    if !submission_params[:url].start_with?('http')
-      parameters[:url] = 'http://' + submission_params[:url]
+    auth_user = current_user
+    
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
     end
-    @submission = Submission.new(parameters)
+    
+    if auth_user
+      
+      parameters = submission_params
+      if !submission_params[:url].start_with?('http')
+        parameters[:url] = 'http://' + submission_params[:url]
+      end
+      @submission = Submission.new(parameters)
+      @submission.user = auth_user
+      
+     @comment.user = auth_user
 
-    respond_to do |format|
-      if @submission.save
-        current_user&.vote_for(@submission)
-        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
-        format.json { render :show, status: :created, location: @submission }
-      else
-        format.html { render :new }
-        format.json { render json: @submission.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @submission.save
+          auth_user&.vote_for(@submission)
+          format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
+          format.json { render :show, status: :created, location: @submission }
+        else
+          format.html { render :new }
+          format.json { render json: @submission.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
