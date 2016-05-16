@@ -35,7 +35,7 @@ paths:
             items:
               $ref: '#/definitions/User'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
 
@@ -56,7 +56,7 @@ paths:
           schema:
             $ref: '#/definitions/User'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
 
@@ -75,7 +75,7 @@ paths:
             items:
               $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
           
@@ -91,7 +91,7 @@ paths:
             items:
               $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
 
@@ -112,7 +112,7 @@ paths:
           schema:
             $ref: '#/definitions/Submission'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
   
@@ -135,7 +135,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
   
@@ -162,17 +162,17 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         default:
-          description: Unexpected error.
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
 
 
-# COMMENTS OPERATIONS
+# COMMENTS OPERATIONS ----------------------------------------------------------
 
-  # GET all coments
-  /comments.json/:
+  # GET all comments and POST new comment
+  /comments.json:
     get:
-      description: Retorna tots els comentaris
+      description: Retorna tots els comentaris.
       responses:
         200:
           description: S'han retornat tots els comentaris.
@@ -181,134 +181,184 @@ paths:
             items:
               $ref: '#/definitions/Comment'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
+
     post:
-      description: Crea un nou comentari
+      description: Crea un nou comentari.
       responses:
         201:
-          description: S'ha creat el comentari
+          description: S'ha creat el comentari especificat.
           schema:
             $ref: '#/definitions/Comment'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
             
   # GET specific comment info
-  /comments/:id.json:
+  /comments/{id}.json:
     get:
-      description: Retorna la informació d'un comentari
+      description: Retorna la informació d'un comentari.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del comentari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: Comentari retornat
+          description: S'ha retornat el comentari.
           schema:
             $ref: '#/definitions/Comment'
         404:
-          description: Comentari no existeix
+          description: Comentari no existeix.
           schema:
             $ref: '#/definitions/Error'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
-            
-  /comments/:id/vote.json:
+  
+  # POST vote some commment          
+  /comments/{id}/vote.json:
     post:
-      description: Vota el comentari amb id 'id'
+      description: Vota el comentari amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del comentari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: S'ha votat el comentari amb l'usuari autenticat.
+          description: S'ha votat el comentari especificat amb l'usuari autenticat.
         404:
-          description: Comentari no existeix
+          description: Comentari no existeix.
           schema:
             $ref: '#/definitions/Error'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
   
-  
-  /users/:id/comments.json:
+  # GET comments by specific user
+  /users/{id}/comments.json:
     get:
-      description: Retorna tots els comentaris de l'usuari amb id 'id'
+      description: Retorna tots els comentaris de l'usuari amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de l'usuari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: S'han retornat els comentaris de l'usuari
+          description: S'han retornat els comentaris de l'usuari.
           schema:
             type: array
             items:
               $ref: '#/definitions/Comment'
         404:
-          description: L'usuari no existeix
+          description: L'usuari no existeix.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
             
 
-# REPLIES OPERATIONS
+# REPLIES OPERATIONS -----------------------------------------------------------
 
-  # GET all replies
+  # GET all replies and POST new reply
   /replies.json:
     get:
-      description: Retorna totes les replies
+      description: Retorna totes les respostes.
       responses:
         200:
-          description: S'han retornat totes les replies.
+          description: S'han retornat totes les respostes.
           schema:
             type: array
             items:
               $ref: '#/definitions/Reply'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
+
     post:
-      description: Crea un nou reply
+      description: Crea una nova resposta.
       responses:
         201:
-          description: S'ha creat el reply
+          description: S'ha creat la resposta.
           schema:
             $ref: '#/definitions/Reply'
         default:
-          description: Error inesperat
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
             
   # GET specific reply info
-  /replies/:id.json:
+  /replies/{id}.json:
     get:
-      description: Retorna la informació d'un resposta a un comentari
+      description: Retorna la informació d'una resposta especificada a un comentari.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de la resposta.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat la resposta
           schema:
             $ref: '#/definitions/Reply'
+        404:
+          description: Resposta no existeix.
+          schema:
+            $ref: '#/definitions/Error'
         default:
-          description: Unexpected error
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
 
-# THREADS OPERATIONS            
+# THREADS OPERATIONS -----------------------------------------------------------            
 
   # GET user threads list
-  /threads/:id.json:
+  /threads/{id}.json:
     get:
       description: Retorna el llistat de 'threads' que té un usuari.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de l'usuari.
+          required: true
+          type: integer
+          format: int64
       responses:
         200:
-          description: Successful response
+          description: S'ha retornat el llistat de 'threads' de l'usuari especificat.
           schema:
             type: array
             items:
               $ref: '#/definitions/Thread'
+        404:
+          description: Usuari no existeix.
+          schema:
+            $ref: '#/definitions/Error'
         default:
-          description: Unexpected error
+          description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
       
   
-# Describe your definitons here
+# DESFINITIONS -----------------------------------------------------------------
 definitions:
   
   # Submission defition
