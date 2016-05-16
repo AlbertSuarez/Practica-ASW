@@ -19,7 +19,7 @@ class SubmissionsController < ApplicationController
     end
     respond_to do |format|
       format.html {redirect_to request.referer}
-      format.json { render :json => @comment }
+      format.json { render :json => @submission }
     end
   end
   
