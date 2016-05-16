@@ -46,9 +46,20 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    
+    auth_user = current_user
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
+    end
+    
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to action: 'show', id: @user.id }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
