@@ -138,6 +138,28 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
+            
+  /submissions/{id}/comments.json:
+    get:
+      description: Retorna tots els comentaris de la submission amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de la publicació
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: S'han retornat tots els comentaris de la publicació.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
   
   # GET submissions by specific user          
   /users/{id}/submissions.json:
