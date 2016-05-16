@@ -14,6 +14,7 @@ gem 'sdoc',             '0.4.0', group: :doc
 gem 'thumbs_up'
 gem "responders"
 gem "roar-rails"
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'sqlite3',        '1.3.9'

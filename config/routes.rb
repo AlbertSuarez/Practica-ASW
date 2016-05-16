@@ -39,8 +39,6 @@ Rails.application.routes.draw do
   
   root 'submissions#index'
   
-  match '*all' => 'my_method_name#cor', via: :options
-  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
