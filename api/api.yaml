@@ -98,7 +98,7 @@ paths:
             $ref: '#/definitions/Error'
             
   # GET specific submission info
-  /api/submissions/:id:
+  /submissions/:id.json:
     get:
       description: Retorna la informació d'un publicació
       responses:
@@ -112,7 +112,7 @@ paths:
             $ref: '#/definitions/Error'
             
   # GET specific reply info
-  /api/replies/:id:
+  /replies/:id.json:
     get:
       description: Retorna la informació d'un resposta a un comentari
       responses:
@@ -126,7 +126,7 @@ paths:
             $ref: '#/definitions/Error'
             
   # GET specific user info
-  /api/users/:id:
+  /users/:id.json:
     get:
       description: Retorna la informació d'un usuari
       responses:
@@ -140,7 +140,7 @@ paths:
             $ref: '#/definitions/Error'
 
   # GET url submissions list
-  /api/submissions:
+  /submissions.json:
     get:
       description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
       responses:
@@ -156,7 +156,7 @@ paths:
             $ref: '#/definitions/Error'
 
   # GET ask submissions list
-  /api/ask:
+  /ask.json:
     get:
       description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
       responses:
@@ -172,7 +172,7 @@ paths:
             $ref: '#/definitions/Error'
 
   # GET user threads list
-  /api/threads/:id:
+  /threads/:id.json:
     get:
       description: Retorna el llistat de 'threads' que té un usuari.
       responses:
@@ -188,7 +188,7 @@ paths:
             $ref: '#/definitions/Error'
       
   # GET user list
-  /api/users:
+  /users.json:
     get:
       description: Retorna un llistat de tots els usuaris.
       responses:
