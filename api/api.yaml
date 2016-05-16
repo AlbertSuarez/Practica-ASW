@@ -59,7 +59,35 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
-
+            
+    put:
+      security:
+        - apiKey: []
+      description: Editar
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del usuari.
+          required: true
+          type: number
+        - name: about
+          in: formData
+          description: Nova descripció a actualitzar.
+          required: true
+          type: string
+      responses:
+        200:
+          description: S'ha actualitzat correctament.
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: No autoritzat.
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
 
 # SUBMISSIONS OPERATIONS -------------------------------------------------------
 
@@ -86,12 +114,21 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: attributes 
-          in: body
-          description: Atributs necessaris per a la creació d'una submission.
+        - name: Title
+          in: formData
+          description: Titol de la submission
           required: true
-          schema:
-            $ref: '#/definitions/Submission'
+          type: string
+        - name: Url
+          in: formData
+          description: URL on redireccionar
+          required: false
+          type: string
+        - name: Pregunta
+          in: formData
+          description: Text de la pregunta
+          required: false
+          type: string 
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -240,12 +277,17 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: attributes 
-          in: body
-          description: Atributs necessaris per a la creació del comentari.
+        - name: comment
+          in: formData
+          description: El comentari a crear
           required: true
-          schema:
-            $ref: '#/definitions/Comment'
+          type: string
+        - name: id
+          in: formData
+          description: identificador de la publicacio sobre la que es fa el comentari
+          required: true
+          type: integer
+          format: int64
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -359,12 +401,17 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: attributes 
-          in: body
-          description: Atributs necessaris per a la creació de la resposta.
+        - name: comment
+          in: formData
+          description: El comentari a crear
           required: true
-          schema:
-            $ref: '#/definitions/Reply'
+          type: string
+        - name: id
+          in: formData
+          description: identificador del comentari sobre el que es fa el reply
+          required: true
+          type: integer
+          format: int64
       responses:
         201:
           description: S'ha creat la resposta.
@@ -483,8 +530,6 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de la publicació.
-    required:
-      - title
   
   # Comment defintion
   Comment:
@@ -508,9 +553,6 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització del comentari.
-    required:
-      - content
-      - submission_id
 
   # Reply definition
   Reply:
@@ -534,9 +576,6 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de la resposta.
-    required:
-      - content
-      - comment_id
         
   # Thread definition
   Thread:
