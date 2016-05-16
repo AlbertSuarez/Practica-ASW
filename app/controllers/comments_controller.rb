@@ -90,7 +90,7 @@ class CommentsController < ApplicationController
       
       respond_to do |format|
         if @comment.save
-          current_user&.vote_for(@comment)
+          auth_user&.vote_for(@comment)
           format.html { redirect_to @comment.submission, notice: 'Comment was successfully created.' }
           format.json { render :show, status: :created, location: @comment }
         else
