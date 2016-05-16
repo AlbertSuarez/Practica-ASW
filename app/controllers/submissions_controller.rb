@@ -82,7 +82,7 @@ class SubmissionsController < ApplicationController
       @submission = Submission.new(parameters)
       @submission.user = auth_user
       
-     @comment.user = auth_user
+     @submission.user = auth_user
 
       respond_to do |format|
         if @submission.save
