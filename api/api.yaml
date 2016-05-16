@@ -65,6 +65,12 @@ paths:
         - apiKey: []
       description: Editar
       parameters:
+        - name: id
+          in: path
+          description: Identificador del usuari.
+          required: true
+          type: integer
+          format: int64
         - name: user
           in: body
           description: L'usuari a modificar
@@ -517,7 +523,7 @@ definitions:
       url:
         type: string
         description: URL on redireccionar.
-      pregunta:
+      text:
         type: string
         description: text de la pregunta.
   
@@ -547,9 +553,9 @@ definitions:
   CommentCreate:
     type: object
     properties:
-      id:
+      submission_id:
         type: integer
-        description: identificador unic del comentari a crear.
+        description: identificador de la submission de la que es vol fer el comentari.
       content:
         type: string
         description: contingut associat del comentari a crear.
@@ -580,12 +586,12 @@ definitions:
   ReplyCreate:     
     type: object
     properties:
-      id:
-        type: integer
-        description: identificador del comentari sobre el que es fa la resposta
-      comment:
+      content:
         type: string
-        description: contingut associat a la resposta a crear.
+        description: contingut de la resposta a crear.
+      comment_id:
+        type: integer
+        description: identificador del comentari al que es correspondrà la resposta.
         
   # Thread definition
   Thread:
@@ -625,9 +631,6 @@ definitions:
   UserUpdate:
     type: object
     properties:
-      id:
-        type: integer
-        description: identificador unic de l'usuari a modificar.
       about:
         type: string
         description: nova descripció a actualitzar.
