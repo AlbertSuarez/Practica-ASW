@@ -65,16 +65,12 @@ paths:
         - apiKey: []
       description: Editar
       parameters:
-        - name: id
-          in: path
-          description: Identificador del usuari.
+        - name: user
+          in: body
+          description: L'usuari a modificar
           required: true
-          type: number
-        - name: about
-          in: formData
-          description: Nova descripció a actualitzar.
-          required: true
-          type: string
+          schema:
+            $ref: '#/definitions/UserUpdate'
       responses:
         200:
           description: S'ha actualitzat correctament.
@@ -114,21 +110,12 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: Title
-          in: formData
-          description: Titol de la submission
+        - name: submission
+          in: body
+          description: La publicació a modificar
           required: true
-          type: string
-        - name: Url
-          in: formData
-          description: URL on redireccionar
-          required: false
-          type: string
-        - name: Pregunta
-          in: formData
-          description: Text de la pregunta
-          required: false
-          type: string 
+          schema:
+            $ref: '#/definitions/SubmissionCreate'
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -278,16 +265,11 @@ paths:
         - application/json
       parameters:
         - name: comment
-          in: formData
+          in: body
           description: El comentari a crear
           required: true
-          type: string
-        - name: id
-          in: formData
-          description: identificador de la publicacio sobre la que es fa el comentari
-          required: true
-          type: integer
-          format: int64
+          schema:
+            $ref: '#/definitions/CommentCreate'
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -401,17 +383,12 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: comment
-          in: formData
-          description: El comentari a crear
+        - name: reply
+          in: body
+          description: La resposta a modificar
           required: true
-          type: string
-        - name: id
-          in: formData
-          description: identificador del comentari sobre el que es fa el reply
-          required: true
-          type: integer
-          format: int64
+          schema:
+            $ref: '#/definitions/ReplyCreate'
       responses:
         201:
           description: S'ha creat la resposta.
@@ -531,6 +508,19 @@ definitions:
         type: string
         description: instant de l'última actualització de la publicació.
   
+  SubmissionCreate:
+    type: object
+    properties:
+      title:
+        type: string
+        description: titol de la submission a crear.
+      url:
+        type: string
+        description: URL on redireccionar.
+      pregunta:
+        type: string
+        description: text de la pregunta.
+  
   # Comment defintion
   Comment:
     type: object
@@ -553,6 +543,16 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització del comentari.
+        
+  CommentCreate:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: identificador unic del comentari a crear.
+      content:
+        type: string
+        description: contingut associat del comentari a crear.
 
   # Reply definition
   Reply:
@@ -576,6 +576,16 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de la resposta.
+        
+  ReplyCreate:     
+    type: object
+    properties:
+      id:
+        type: integer
+        description: identificador del comentari sobre el que es fa la resposta
+      comment:
+        type: string
+        description: contingut associat a la resposta a crear.
         
   # Thread definition
   Thread:
@@ -611,6 +621,16 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de l'usuari.
+  
+  UserUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: identificador unic de l'usuari a modificar.
+      about:
+        type: string
+        description: nova descripció a actualitzar.
   
   # Error defintion
   Error:
