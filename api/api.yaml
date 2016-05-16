@@ -63,7 +63,7 @@ paths:
 
 # SUBMISSIONS OPERATIONS -------------------------------------------------------
 
-   # GET url submissions list
+   # GET url submissions list and POST new submission
   /submissions.json:
     get:
       description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
@@ -80,29 +80,18 @@ paths:
             $ref: '#/definitions/Error'
    
     post:
+      security:
+        - apiKey: []
       description: Crea una nova publicació.
       consumes:
         - application/json
       parameters:
-        - name: Title
+        - name: attributes 
           in: body
-          description: Titol de la submission
+          description: Atributs necessaris per a la creació d'una submission.
           required: true
           schema:
-            type: string
-        - name: Url
-          in: body
-          description: URL on redireccionar
-          required: false
-          schema:
-            type: string
-        - name: Pregunta
-          in: body
-          description: Text de la pregunta
-          required: false
-          schema:
-            type: string 
-            
+            $ref: '#/definitions/Submission'
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -153,6 +142,8 @@ paths:
   # POST vote some submission          
   /submissions/{id}/vote.json:
     post:
+      security:
+        - apiKey: []
       description: Vota la publicació amb id 'id'.
       parameters:
         - name: id
@@ -172,7 +163,8 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
-            
+  
+  # GET comments by specific user     
   /submissions/{id}/comments.json:
     get:
       description: Retorna tots els comentaris de la submission amb id 'id'.
@@ -242,22 +234,18 @@ paths:
             $ref: '#/definitions/Error'
 
     post:
+      security:
+        - apiKey: []
       description: Crea un nou comentari.
       consumes:
         - application/json
       parameters:
-        - name: comment
+        - name: attributes 
           in: body
-          description: El comentari a crear
+          description: Atributs necessaris per a la creació del comentari.
           required: true
           schema:
-            type: string
-        - name: id
-          in: body
-          description: identificador de la publicacio sobre la que es fa el comentari
-          required: true
-          type: integer
-          format: int64
+            $ref: '#/definitions/Comment'
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -371,18 +359,12 @@ paths:
       consumes:
         - application/json
       parameters:
-        - name: comment
+        - name: attributes 
           in: body
-          description: El comentari a crear
+          description: Atributs necessaris per a la creació de la resposta.
           required: true
           schema:
-            type: string
-        - name: id
-          in: body
-          description: identificador del comentari sobre el que es fa el reply
-          required: true
-          type: integer
-          format: int64
+            $ref: '#/definitions/Reply'
       responses:
         201:
           description: S'ha creat la resposta.
@@ -501,6 +483,8 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de la publicació.
+    required:
+      - title
   
   # Comment defintion
   Comment:
@@ -524,6 +508,9 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització del comentari.
+    required:
+      - content
+      - submission_id
 
   # Reply definition
   Reply:
@@ -547,6 +534,9 @@ definitions:
       updated_at:
         type: string
         description: instant de l'última actualització de la resposta.
+    required:
+      - content
+      - comment_id
         
   # Thread definition
   Thread:
