@@ -74,8 +74,19 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     
-    if current_user
+    auth_user = current_user
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
+    end
+    
+    if auth_user
       @comment = Comment.new(comment_params)
+      @comment.user = auth_user
       
       respond_to do |format|
         if @comment.save
