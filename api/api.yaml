@@ -78,6 +78,40 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
+   
+    post:
+      description: Crea una nova publicació.
+      consumes:
+        - application/json
+      parameters:
+        - name: Title
+          in: body
+          description: Titol de la submission
+          required: true
+          schema:
+            type: string
+        - name: Url
+          in: body
+          description: URL on redireccionar
+          required: false
+          schema:
+            type: string
+        - name: Pregunta
+          in: body
+          description: Text de la pregunta
+          required: false
+          schema:
+            type: string 
+            
+      responses:
+        201:
+          description: S'ha creat el comentari especificat.
+          schema:
+            $ref: '#/definitions/Comment'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
           
   # GET ask submissions list
   /ask.json:
@@ -218,6 +252,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: id
+          in: body
+          description: identificador de la publicacio sobre la que es fa el comentari
+          required: true
+          type: integer
+          format: int64
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -325,7 +365,24 @@ paths:
             $ref: '#/definitions/Error'
 
     post:
+      security:
+        - apiKey: []
       description: Crea una nova resposta.
+      consumes:
+        - application/json
+      parameters:
+        - name: comment
+          in: body
+          description: El comentari a crear
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: body
+          description: identificador del comentari sobre el que es fa el reply
+          required: true
+          type: integer
+          format: int64
       responses:
         201:
           description: S'ha creat la resposta.
@@ -354,6 +411,58 @@ paths:
             $ref: '#/definitions/Reply'
         404:
           description: Resposta no existeix.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
+            
+  # POST vote some reply          
+  /replies/{id}/vote.json:
+    post:
+      security:
+        - apiKey: []
+      description: Vota el reply amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador del reply.
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: S'ha votat el reply especificat amb l'usuari autenticat.
+        404:
+          description: Reply no existeix.
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
+            
+  # GET replies by specific user
+  /users/{id}/replies.json:
+    get:
+      description: Retorna tots els replies de l'usuari amb id 'id'.
+      parameters:
+        - name: id
+          in: path
+          description: Identificador de l'usuari.
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: S'han retornat els replies de l'usuari.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Reply'
+        404:
+          description: L'usuari no existeix.
           schema:
             $ref: '#/definitions/Error'
         default:
@@ -494,12 +603,6 @@ definitions:
       about:
         type: string
         description: descripció de l'usuari.
-      email:
-        type: string
-        description: correu de l'usuari.
-      password:
-        type: string
-        description: contrasenya de l'usuari.
       created_at:
         type: string
         description: instant de creació de l'usuari.
