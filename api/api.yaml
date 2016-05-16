@@ -60,6 +60,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+
 # SUBMISSIONS OPERATIONS -------------------------------------------------------
 
    # GET url submissions list
@@ -68,7 +69,7 @@ paths:
       description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
       responses:
         200:
-          description: S'ha retornat totes les publicacions de tipus 'URL'.
+          description: S'ha retornat totes les submissions de tipus 'URL'.
           schema:
             type: array
             items:
@@ -84,7 +85,7 @@ paths:
       description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
       responses:
         200:
-          description: S'ha retornat totes les publicacions de tipus 'Ask'.
+          description: S'ha retornat totes les submissions de tipus 'Ask'.
           schema:
             type: array
             items:
@@ -138,14 +139,13 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # GET comments of an specific submissions
   /submissions/{id}/comments.json:
     get:
-      description: Retorna tots els comentaris de la publicació amb id 'id'.
+      description: Retorna tots els comentaris de la submission amb id 'id'.
       parameters:
         - name: id
           in: path
-          description: Identificador de la publicació.
+          description: Identificador de la publicació
           required: true
           type: integer
           format: int64
@@ -156,10 +156,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Comment'
-        404:
-          description: La publicació no existeix.
-          schema:
-            $ref: '#/definitions/Error'
         default:
           description: Error inesperat.
           schema:
@@ -192,6 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+
 # COMMENTS OPERATIONS ----------------------------------------------------------
 
   # GET all comments and POST new comment
@@ -212,6 +209,15 @@ paths:
 
     post:
       description: Crea un nou comentari.
+      consumes:
+        - application/json
+      parameters:
+        - name: comment
+          in: body
+          description: El comentari a crear
+          required: true
+          schema:
+            type: string
       responses:
         201:
           description: S'ha creat el comentari especificat.
@@ -250,6 +256,8 @@ paths:
   # POST vote some commment          
   /comments/{id}/vote.json:
     post:
+      security:
+        - apiKey: []
       description: Vota el comentari amb id 'id'.
       parameters:
         - name: id
@@ -297,32 +305,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # GET replies of an specific comment
-  /comments/{id}/replies.json:
-    get:
-      description: Retorna totes les respostes del comentari amb id 'id'.
-      parameters:
-        - name: id
-          in: path
-          description: Identificador del comentari.
-          required: true
-          type: integer
-          format: int64
-      responses:
-        200:
-          description: S'han retornat totes les respostes de la publicació.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Reply'
-        404:
-          description: El comentari no existeix.
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: Error inesperat.
-          schema:
-            $ref: '#/definitions/Error'
 
 # REPLIES OPERATIONS -----------------------------------------------------------
 
@@ -407,7 +389,8 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
-
+      
+  
 # DESFINITIONS -----------------------------------------------------------------
 definitions:
   
