@@ -58,12 +58,12 @@ class UsersController < ApplicationController
     end
     
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to action: 'show', id: @user.id }
-        format.json { render :show, status: :ok, location: @user }
+      if auth_user.update(user_params)
+        format.html { redirect_to action: 'show', id: auth_user.id }
+        format.json { render :show, status: :ok, location: auth_user }
       else
         format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: auth_user.errors, status: :unprocessable_entity }
       end
     end
   end
