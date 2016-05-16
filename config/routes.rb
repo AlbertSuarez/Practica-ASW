@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'user_submissions' => 'submissions#user_submissions'
   get 'users/:user/submissions' => 'submissions#user_submissions'
   
-  put 'users' => 'users#update'
+  put 'users' => 'users#update_authenticated'
   
   get '/submissions/:id/comments' => 'comments#submission_comments'
   

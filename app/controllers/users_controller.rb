@@ -67,6 +67,28 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def update_authenticated
+    auth_user = current_user
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "status" => "404", "error" => "User not found."}, status: :not_found
+    end
+    
+    respond_to do |format|
+      if auth_user.update(user_params)
+        format.html { redirect_to action: 'show', id: auth_user.id }
+        format.json { render :show, status: :ok, location: auth_user }
+      else
+        format.html { render :edit }
+        format.json { render json: auth_user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # DELETE /users/1
   # DELETE /users/1.json
