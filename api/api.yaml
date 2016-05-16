@@ -22,6 +22,91 @@ produces:
 # Describe your paths here
 paths:
 
+#User operations
+
+  # GET user list
+  /users.json:
+    get:
+      description: Retorna un llistat de tots els usuaris.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  # GET specific user info
+  /users/:id.json:
+    get:
+      description: Retorna la informació d'un usuari
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+#Submissions operations
+
+   # GET url submissions list
+  /submissions.json:
+    get:
+      description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+          
+  # GET ask submissions list
+  /ask.json:
+    get:
+      description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+            
+  # GET specific submission info
+  /submissions/:id.json:
+    get:
+      description: Retorna la informació d'un publicació
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Submission'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+#Comments operations
+
   # GET all coments
   /comments.json/:
     get:
@@ -97,17 +182,34 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  # GET specific submission info
-  /submissions/:id.json:
+
+#Replies operations
+
+
+  # GET all replies
+  /replies.json:
     get:
-      description: Retorna la informació d'un publicació
+      description: Retorna totes les replies
       responses:
         200:
-          description: Successful response
+          description: S'han retornat totes les replies.
           schema:
-            $ref: '#/definitions/Submission'
+            type: array
+            items:
+              $ref: '#/definitions/Reply'
         default:
-          description: Unexpected error
+          description: Error inesperat
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      description: Crea un nou reply
+      responses:
+        201:
+          description: S'ha creat el reply
+          schema:
+            $ref: '#/definitions/Reply'
+        default:
+          description: Error inesperat
           schema:
             $ref: '#/definitions/Error'
             
@@ -124,52 +226,8 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-            
-  # GET specific user info
-  /users/:id.json:
-    get:
-      description: Retorna la informació d'un usuari
-      responses:
-        200:
-          description: Successful response
-          schema:
-            $ref: '#/definitions/User'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
 
-  # GET url submissions list
-  /submissions.json:
-    get:
-      description: Retorna un llistat de publicacions de tipus 'URL', es a dir, amb el camp url no buit ordenat cronologicament.
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Submission'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
-  # GET ask submissions list
-  /ask.json:
-    get:
-      description: Retorna un llistat de publicacions de tipus 'Ask', es a dir, amb el camp url buit ordenat cronologicament.
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Submission'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+#Threads            
 
   # GET user threads list
   /threads/:id.json:
@@ -187,21 +245,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
       
-  # GET user list
-  /users.json:
-    get:
-      description: Retorna un llistat de tots els usuaris.
-      responses:
-        200:
-          description: Successful response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
   
 # Describe your definitons here
 definitions:
