@@ -38,6 +38,31 @@ paths:
           description: Error inesperat.
           schema:
             $ref: '#/definitions/Error'
+            
+    put:
+      security:
+        - apiKey: []
+      description: Editar
+      parameters:
+        - name: about
+          in: body
+          description: La descripció 'about' a modificar
+          required: true
+          schema:
+            $ref: '#/definitions/UserUpdate'
+      responses:
+        200:
+          description: S'ha actualitzat correctament.
+          schema:
+            $ref: '#/definitions/User'
+        401:
+          description: No autoritzat.
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Error inesperat.
+          schema:
+            $ref: '#/definitions/Error'
 
   # GET specific user info
   /users/{id}.json:
@@ -53,37 +78,6 @@ paths:
       responses:
         200:
           description: S'ha retornat l'usuari especificat.
-          schema:
-            $ref: '#/definitions/User'
-        default:
-          description: Error inesperat.
-          schema:
-            $ref: '#/definitions/Error'
-            
-    put:
-      security:
-        - apiKey: []
-      description: Editar
-      parameters:
-        - name: id
-          in: path
-          description: Identificador del usuari.
-          required: true
-          type: integer
-          format: int64
-        - name: user
-          in: body
-          description: L'usuari a modificar
-          required: true
-          schema:
-            $ref: '#/definitions/UserUpdate'
-      responses:
-        200:
-          description: S'ha actualitzat correctament.
-          schema:
-            $ref: '#/definitions/User'
-        401:
-          description: No autoritzat.
           schema:
             $ref: '#/definitions/User'
         default:
@@ -628,6 +622,7 @@ definitions:
         type: string
         description: instant de l'última actualització de l'usuari.
   
+  # User Update definition
   UserUpdate:
     type: object
     properties:
