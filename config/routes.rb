@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get '/submissions/:id/comments' => 'comments#submission_comments'
   
   ##########authentication stuff---> don't touch!###############
-  
+  get 'signin', to: redirect('/auth/google_oauth2')
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
