@@ -100,6 +100,14 @@ class RepliesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def comment_replies
+    begin
+      @replies = Reply.where("comment_id=?", params[:id]).order("created_at DESC")
+    rescue ActiveRecord::RecordNotFound
+      render :json => { "code" => "404", "message" => "Comment not found."}, status: :not_found
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

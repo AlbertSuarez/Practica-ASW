@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   put 'users' => 'users#update_authenticated'
   
   get '/submissions/:id/comments' => 'comments#submission_comments'
+  get '/comments/:id/replies' => 'comments#comment_replies'
   
   ##########authentication stuff---> don't touch!###############
   get 'signin', to: 'sessions#redirecciona'
