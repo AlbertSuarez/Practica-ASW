@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     session[:user_id] = user.id
     
     if session[:url]
-      url = session[:url] + '?token=' + user.oauth_token
+      url = session[:url] + '&token=' + user.oauth_token
       session[:url] = nil
       redirect_to url
     else
