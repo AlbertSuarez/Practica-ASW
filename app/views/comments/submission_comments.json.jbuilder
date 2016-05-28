@@ -1,5 +1,5 @@
 json.array!(@comments) do |comment|
-  json.extract! comment, :id, :content, :user_id, :submission_id
+  json.extract! comment, :id, :content, :user_id, :submission_id, :created_at, :updated_at
   json.set! "_links" do
     json.set! "self" do
       json.set! "href", comment_url(comment, format: :json)
