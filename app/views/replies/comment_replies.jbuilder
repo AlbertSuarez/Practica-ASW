@@ -1,5 +1,5 @@
 json.array!(@replies) do |reply|
-  json.extract! reply, :id, :content, :user_id, :comment_id, :created_at, :updated_at
+  json.extract! reply, :id, :content, :user_id, :reply_id, :created_at, :updated_at
   json.set! "_links" do
     json.set! "self" do
       json.set! "href", reply_url(reply, format: :json)
