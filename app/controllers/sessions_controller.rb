@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       else
         signe = "?"
       end
-      url = session[:url] + signe + 'token=' + user.oauth_token + '&userid=' + (user.id).to_s + '&username=' + user.name
+      url = session[:url] + signe + 'token=' + user.oauth_token + '&userid=' + (user.id).to_s
       session[:url] = nil
       redirect_to url
     else
