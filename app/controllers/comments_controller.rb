@@ -78,6 +78,7 @@ class CommentsController < ApplicationController
     begin
       tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
       if (tmp)
+        puts tmp.name
         auth_user = tmp
       end
     rescue
