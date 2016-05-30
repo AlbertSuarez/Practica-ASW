@@ -35,10 +35,10 @@ class SubmissionsController < ApplicationController
       # intentionally left out
     end
     if (auth_user)
-      render :json => { "votes" => thing.votes.size, "voted" => auth_user.voted_for?(thing)}, status: :not_found
+      render :json => { "votes" => thing.votes.size, "voted" => auth_user.voted_for?(thing)}
       return;
     else
-      render :json => { "votes" => thing.votes.size, "voted" => false}, status: :not_found
+      render :json => { "votes" => thing.votes.size, "voted" => false}
       return;
     end
   end
