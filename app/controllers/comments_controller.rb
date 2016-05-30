@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
   end
   
   def votes
-    thing = Submission.find(params[:id])
+    thing = Comment.find(params[:id])
     auth_user = current_user
     begin
       tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
