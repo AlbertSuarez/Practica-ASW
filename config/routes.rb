@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   post 'submissions/:id/vote' => 'submissions#vote'
   post 'comments/:id/vote' => 'comments#vote'
   post 'replies/:id/vote' => 'replies#vote'
+  
+  get 'submissions/:id/votes' => 'submissions#votes'
+  get 'comments/:id/votes' => 'comments#votes'
+  get 'replies/:id/votes' => 'replies#votes'
   ###############
   
   get 'ask' => 'submissions#ask'

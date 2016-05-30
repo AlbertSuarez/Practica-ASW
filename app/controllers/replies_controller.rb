@@ -22,6 +22,26 @@ class RepliesController < ApplicationController
       format.json { render :json => @reply }
     end
   end
+  
+  def votes
+    thing = Reply.find(params[:id])
+    auth_user = current_user
+    begin
+      tmp = User.where("oauth_token=?", request.headers["HTTP_API_KEY"])[0]
+      if (tmp)
+        auth_user = tmp
+      end
+    rescue
+      # intentionally left out
+    end
+    if (auth_user)
+      render :json => { "votes" => thing.votes.size, "voted" => auth_user.voted_for?(thing)}, status: :not_found
+      return;
+    else
+      render :json => { "votes" => thing.votes.size, "voted" => false}, status: :not_found
+      return;
+    end
+  end
 
   # GET /replies
   # GET /replies.json
